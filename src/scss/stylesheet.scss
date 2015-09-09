@@ -1,12 +1,36 @@
-$color: #f00;
-$border: 1px solid blue;
+@import "trigonometry";
 
-div {
-	color: $color;
-	border: $border;
-  	background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1));
+//////////////////////////////////////////////////////////////////
+//////////////////////////// MAIN ////////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+$kittenPic: "../pics/kitten.jpg";
+$circleSize: 500px;
+.main-circle {
+    background-image: url($kittenPic);
+    background-position: center;
+    height: $circleSize;
+    width: $circleSize;
+    border-radius: ($circleSize / 2);
+    position: absolute;
+    left: (- $circleSize / 2);
+    bottom: ($circleSize / 2);
 }
 
-h1 {
-    border: $border;
+$divTimeSize: 50px;
+.div-time {
+    height: $divTimeSize;
+    width: $divTimeSize;
+    border-radius: ($divTimeSize / 2);
+    border: 1px solid red;
+    position: absolute;
+}
+
+@for $i from 0 through 4 {
+    $angle: $pi * 4 / 3 - $pi / 6 * $i;
+    $amend: ($circleSize - $divTimeSize) / 2 + 0px;
+    #div-time#{$i} {
+        right: round((cos($angle) * $circleSize) / 2 + $amend);
+        top: round((sin($angle) * $circleSize) / 2 + $amend);
+    }
 }

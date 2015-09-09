@@ -15,6 +15,7 @@ var cfg = {
 
 cfg.src.dir = './src/';
 cfg.src.scssPattern = cfg.src.dir + 'scss/*.scss';
+cfg.src.scssDir = cfg.src.dir + 'scss/';
 cfg.src.htmlPattern = cfg.src.dir + '*.html';
 
 cfg.build.dir = './build/';
@@ -36,9 +37,11 @@ gulp.task('connect', function () {
 gulp.task('sass', function () {
     console.log('gulp: sass');
     gulp.src(cfg.src.scssPattern)
-        .pipe(sass())
+        .pipe(sass({
+            includePaths: [cfg.src.scssDir]
+        }))
         .pipe(autoprefixer('last 15 versions'))
-        .pipe(minifyCss())
+        //.pipe(minifyCss())
         .pipe(gulp.dest(cfg.build.cssDir))
         .pipe(connect.reload());
 });
