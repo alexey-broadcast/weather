@@ -1,3 +1,5 @@
+var weatherapi = weatherapi();
+
 $(document).ready(function () {
     function initialAnimation() {
         const id = '#div-time';
@@ -26,8 +28,13 @@ $(document).ready(function () {
         for(var i = 0; i < 5; ++i) {
             divTimeAnimation(i);
         }
-
     }
 
+    function showCurrentWeather(res) {
+        var div = $('.current-weather .content');
+        div.text(res.name);
+    }
+
+    weatherapi.getCurrentWeather(showCurrentWeather);
     initialAnimation();
 });

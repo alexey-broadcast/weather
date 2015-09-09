@@ -5,10 +5,10 @@ var connect         = require('gulp-connect');
 var sass            = require('gulp-sass');
 var autoprefixer    = require('gulp-autoprefixer');
 var minifyCss       = require('gulp-minify-css');
-var es6transpiler   = require('gulp-es6-transpiler');
 var uglify          = require('gulp-uglify');
 var traceur         = require('gulp-traceur');
 var plumber         = require('gulp-plumber');
+var concat         = require('gulp-concat');
 
 
 // ============== CONFIG ==============
@@ -26,6 +26,7 @@ cfg.src.jsPattern = cfg.src.dir + 'js/*.js';
 cfg.build.dir = './build/';
 cfg.build.cssDir = cfg.build.dir + 'css/';
 cfg.build.jsDir = cfg.build.dir + 'js/';
+cfg.build.mainJsFile = 'script.js';
 
 // ============== MAIN ==============
 
@@ -59,6 +60,7 @@ gulp.task('js', function () {
     console.log('gulp: js');
     gulp.src(cfg.src.jsPattern)
         .pipe(plumber())
+        .pipe(concat(cfg.build.mainJsFile))
         .pipe(traceur())
         //.pipe(uglify())
         .pipe(gulp.dest(cfg.build.jsDir))

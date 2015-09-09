@@ -13,9 +13,8 @@ $circleSize: 500px;
     width: $circleSize;
     border-radius: ($circleSize / 2);
     position: absolute;
-    left: (- $circleSize / 2.5);
-    //left: ($circleSize / 2);
-    bottom: ($circleSize / 2);
+    left: (- $circleSize / 3);
+    top: ($circleSize / 3);
 }
 
 $divTimeSize: 50px;
@@ -25,16 +24,11 @@ $divTimeSize: 50px;
     border-radius: ($divTimeSize / 2);
     border: 1px solid red;
     position: absolute;
-    $amend: ($circleSize - $divTimeSize) / 2 + 0px;
-    right: $circleSize / 2 + $amend;
-    top: $amend;
 }
 
-//@for $i from 0 through 4 {
-//    $angle: $pi * 4 / 3 - $pi / 6 * $i;
-//    $amend: ($circleSize - $divTimeSize) / 2 + 0px;
-//    #div-time#{$i} {
-//        right: round((cos($angle) * $circleSize) / 2 + $amend);
-//        top: round((sin($angle) * $circleSize) / 2 + $amend);
-//    }
-//}
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
