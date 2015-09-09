@@ -1,0 +1,12 @@
+$color: #f00;
+$border: 1px solid blue;
+
+div {
+	color: $color;
+	border: $border;
+  	background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1));
+}
+
+h1 {
+    border: $border;
+}
