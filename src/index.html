@@ -9,24 +9,66 @@
 
     <!-- Bootstrap -->
     <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">-->
-    <!-- stylesheet.css -->
     <link href="css/stylesheet.css" rel="stylesheet">
-    <!-- fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300,500,700,300italic,400italic,500italic,700italic' rel='stylesheet' type='text/css'>
     <!--<link href='https://fonts.googleapis.com/css?family=Ubuntu:400,400italic' rel='stylesheet' type='text/css'>-->
 </head>
 <body>
 
-<div class="main-circle">
-    <div class="current-weather"><div class="content">CURRENT WEATHER</div></div>
-    <div class="div-time" id="div-time0"><div class="content">00000</div></div>
-    <div class="div-time" id="div-time1"><div class="content">1111111111</div></div>
-    <div class="div-time" id="div-time2"><div class="content">2</div></div>
-    <div class="div-time" id="div-time3"><div class="content">3</div></div>
-    <div class="div-time" id="div-time4"><div class="content">4</div></div>
-</div>
 
+<!----------------------------------------------------------------------------------------------------->
+<!--------------------------------------VISIBLE CONTENTS---begin--------------------------------------->
+<!----------------------------------------------------------------------------------------------------->
+
+<header>
+    <div class="datetime">CURRENT TIME</div>
+    <div class="location">CURRENT CITY</div>
+</header>
+<article class="main-circle">
+    <div class="current-weather">
+        <div class="content">
+            <svg class="main-icon"><use xlink:href="#01d"/></svg>
+            <div class="main-temperature">TEMPERATURE</div>
+            <div class="main-description">DESCRIPTION</div>
+            <div class="main-wind">
+                <div class="main-wind-arrow inline-block">&darr;</div>
+                <span class="main-wind-description">WIND</span>
+            </div>
+        </div>
+    </div>
+    <div class="div-time" id="div-time0">
+        <div class="content"><svg class="hour-icon"><use xlink:href="#02d"/></svg></div>
+        <div class="hour-content">00</div>
+    </div>
+    <div class="div-time" id="div-time1">
+        <div class="content"><svg class="hour-icon"><use xlink:href="#01n"/></svg></div>
+        <div class="hour-content">11</div>
+    </div>
+    <div class="div-time" id="div-time2">
+        <div class="content"><svg class="hour-icon"><use xlink:href="#01d"/></svg></div>
+        <div class="hour-content">22</div>
+    </div>
+    <div class="div-time" id="div-time3">
+        <div class="content"><svg class="hour-icon"><use xlink:href="#01n"/></svg></div>
+        <div class="hour-content">33</div>
+    </div>
+    <div class="div-time" id="div-time4">
+        <div class="content"><svg class="hour-icon"><use xlink:href="#01d"/></svg></div>
+        <div class="hour-content">44</div>
+    </div>
+
+</article>
+
+<!----------------------------------------------------------------------------------------------------->
+<!--------------------------------------VISIBLE CONTENTS---end----------------------------------------->
+<!----------------------------------------------------------------------------------------------------->
+
+
+
+<div style="height: 0; width: 0; position: absolute; visibility: hidden">
+    <!-- inject:svg --><!-- endinject -->
+</div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->

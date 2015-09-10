@@ -4,13 +4,25 @@
 //////////////////////////// MAIN ////////////////////////////////
 //////////////////////////////////////////////////////////////////
 
+body {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+header {
+    padding: 1em;
+}
+header .location {
+    font-size: 2em;
+}
+
 $kittenPic: "../pics/kitten.jpg";
 $circleSize: 500px;
 .main-circle {
-    background-image: url($kittenPic);
-    background-position: center;
+    //background-image: url($kittenPic);
+    //background-position: center;
     height: $circleSize;
     width: $circleSize;
+    border: 1px solid green;
     border-radius: ($circleSize / 2);
     position: absolute;
     left: (- $circleSize / 3);
@@ -22,7 +34,6 @@ $divTimeSize: 50px;
     height: $divTimeSize;
     width: $divTimeSize;
     border-radius: ($divTimeSize / 2);
-    border: 1px solid red;
     position: absolute;
 }
 
@@ -31,4 +42,33 @@ $divTimeSize: 50px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.hour-icon {
+    width: $divTimeSize;
+    height: $divTimeSize;
+}
+
+.hour-content {
+    position: absolute;
+    top: 50%;
+    left: 150%;
+    transform: translate(-50%, -50%);
+}
+
+
+.content div {
+    text-align: right;
+}
+
+.main-wind-description {
+    padding-left: .3em;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.br {
+    border: 1px solid red;
 }

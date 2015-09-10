@@ -8,7 +8,10 @@ var minifyCss       = require('gulp-minify-css');
 var uglify          = require('gulp-uglify');
 var traceur         = require('gulp-traceur');
 var plumber         = require('gulp-plumber');
-var concat         = require('gulp-concat');
+var concat          = require('gulp-concat');
+var svgstore        = require('gulp-svgstore');
+var svgmin          = require('gulp-svgmin');
+var inject          = require('gulp-inject');
 
 
 // ============== CONFIG ==============
@@ -22,6 +25,7 @@ cfg.src.scssPattern = cfg.src.dir + 'scss/*.scss';
 cfg.src.scssDir = cfg.src.dir + 'scss/';
 cfg.src.htmlPattern = cfg.src.dir + '*.html';
 cfg.src.jsPattern = cfg.src.dir + 'js/*.js';
+cfg.src.iconPattern = cfg.src.dir + 'icons/*.svg';
 
 cfg.build.dir = './build/';
 cfg.build.cssDir = cfg.build.dir + 'css/';
@@ -71,8 +75,17 @@ gulp.task('js', function () {
 // html
 gulp.task('html', function () {
     console.log('gulp: html');
+    function fileContents (filePath, file) {
+        return file.contents.toString();
+    }
+
+    var svgs = gulp
+        .src(cfg.src.iconPattern)
+        .pipe(svgstore({ inlineSvg: true }));
+
     gulp.src(cfg.src.htmlPattern)
         .pipe(plumber())
+        .pipe(inject(svgs, { transform: fileContents }))
         .pipe(gulp.dest(cfg.build.dir))
         .pipe(connect.reload());
 });
