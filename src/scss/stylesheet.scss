@@ -4,9 +4,19 @@
 //////////////////////////// MAIN ////////////////////////////////
 //////////////////////////////////////////////////////////////////
 
+$textColor: white;
+$btnBgColor: white;
+$outerCircleColor: white;
+$outerCircleBorder: white;
+$innerCircleColor: white;
+
 body {
     font-family: 'Ubuntu', sans-serif;
+    color: $textColor;
     overflow: hidden;
+}
+svg {
+    fill: $textColor;
 }
 
 header {
@@ -22,19 +32,25 @@ aside {
 }
 
 button {
+    color: $textColor;
     margin: 1em;
     $buttonSize: 4em;
     width: $buttonSize;
     height: $buttonSize;
     border-radius: ($buttonSize / 2);
     border: none;
-    background-color: lightblue;
+    background-color: $btnBgColor;
     position: relative;
     right: -6em;
-    //top: -$buttonSize;
+    box-shadow: 0 6px 6px 2px rgba(0, 0, 0, 0.2);
+}
+button:focus {
+    outline: none;
+}
+button:active {
+    box-shadow: 0 3px 3px 2px rgba(0, 0, 0, 0.2);
 }
 
-$kittenPic: "../pics/kitten.jpg";
 $circleSize: 500px;
 .main-circle {
     height: $circleSize;
@@ -53,10 +69,10 @@ $circleSize: 500px;
     position: absolute;
     left: 0;
     top: 0;
-    background-color: rgba(0, 0, 175, 0.1);
+    background-color: $outerCircleColor;
     border-style: solid;
     border-width: 2px;
-    border-color: rgba(0, 0, 230, 0.1);
+    border-color: $outerCircleBorder;
 }
 
 .inner-circle1 {
@@ -68,7 +84,7 @@ $circleSize: 500px;
     $offset: (100% - $size) / 2;
     left: $offset;
     top: $offset;
-    background-color: rgba(130, 190, 220, 0.3);
+    background-color: $innerCircleColor;
 }
 
 .inner-circle2 {
@@ -80,7 +96,7 @@ $circleSize: 500px;
     $offset: (100% - $size) / 2;
     left: $offset;
     top: $offset;
-    background-color: rgba(130, 190, 220, 0.3);
+    background-color: $innerCircleColor;
 }
 
 .content-circle {
@@ -92,20 +108,23 @@ $circleSize: 500px;
     left: $offset;
     top: $offset;
     position: absolute;
-    background-color: rgba(0, 174, 0, 0.1);
 
     box-sizing: border-box;
-    border-style: solid;
-    border-width: 2px;
-    border-color: rgba(0, 0, 255, 0.1);
+    border: 2px solid $outerCircleBorder;
 }
 
-$divTimeSize: 50px;
+$divTimeBorder: 2px;
+$divTimePadding: 10px;
+$divTimeSize: 50px - 2 * ($divTimeBorder + $divTimePadding);
 .div-time {
+    position: absolute;
+    padding: $divTimePadding;
     height: $divTimeSize;
     width: $divTimeSize;
-    border-radius: ($divTimeSize / 2);
-    position: absolute;
+    border-radius: 50%;
+
+    background-color: $btnBgColor;
+    border: $divTimeBorder solid $textColor;
 }
 
 .content {
@@ -122,9 +141,8 @@ $divTimeSize: 50px;
 
 .hour-content {
     position: absolute;
-    top: 50%;
-    left: 150%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 130%;
 }
 
 

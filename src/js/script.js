@@ -9,10 +9,12 @@ $(document).ready(function () {
     function initialAnimation() {
         const id = '#div-time';
         const circleSize = $('.main-circle').width();
-        const divTimeSize = $('.div-time').width();
+        var border = parseInt($('.div-time').css('borderWidth'));
+        var padding = parseInt($('.div-time').css('padding'));
+        const divTimeSize = $('.div-time').width() + 2 * (border + padding);
         const amend = (circleSize - divTimeSize) / 2;
 
-        const dur = 1200;
+        const dur = 2400;
         const count = 200;
         const startAngle = -Math.PI / 6;
 
@@ -46,20 +48,7 @@ $(document).ready(function () {
             }, dur / count);
         }
 
-        function setBackground() {
-            var bg = $('.bgImgContainer');
-            var circle = $('.content-circle');
-            var url = 'url(pics/01d.jpg)';
-
-            bg.css('background-image', url);
-
-            var pos = `0 -${circle.offset().top}px`;
-            circle.css('background-position', pos);
-            circle.css('background-image', url);
-        }
-
         //process Animations
-        setBackground();
         btnAnimation();
         for(var i = 0; i < 5; ++i) {
             divTimeAnimation(i);
@@ -83,14 +72,39 @@ $(document).ready(function () {
         });
     }
 
+    function setBackground(pic) {
+        pic = pic.replace(/0[34]/, '02');
+        pic = pic.replace(/1[01]/, '09');
+        pic = pic.replace('13n', '13d');
+        pic = pic.replace('50n', '50d');
+        var bg = $('.bgImgContainer');
+        var circle = $('.content-circle');
+        var url = `url(pics/${pic}.jpg)`;
+
+        bg.css('background-image', url);
+
+        var pos = `0 -${circle.offset().top}px`;
+        circle.css('background-position', pos);
+        circle.css('background-image', url);
+
+        var colors = fn.getColors(pic);
+        console.log(colors);
+        $('button').css('background-color', colors.btnBgColor);
+        $('.div-time').css('background-color', colors.btnBgColor);
+        $('.outer-circle').css('background-color', colors.outerCircleColor);
+        $('.outer-circle').css('border-color', colors.outerCircleBorder);
+        $('.content-circle').css('border-color', colors.outerCircleBorder);
+        $('.inner-circle1').css('background-color', colors.innerCircleColor);
+        $('.inner-circle2').css('background-color', colors.innerCircleColor);
+    }
+
     function updateHeader(res) {
         $('header .datetime').text(fn.dateString(0, true));
         $('header .location').text(res.location);
     }
 
     function updateWeather(res) {
-        //var icon = '#'+res.icon;
-        var icon = '#50d';
+        var icon = '#'+res.icon;
         $('.main-icon use').attr('xlink:href', icon);
 
         var tempStr = weather.convertTemp(res.temp, weather.format)
@@ -106,6 +120,7 @@ $(document).ready(function () {
 
     function showCurrentWeather(res) {
         tempK.current = res.temp;
+        setBackground(res.icon);
         updateHeader(res);
         updateWeather(res);
     }
@@ -113,7 +128,7 @@ $(document).ready(function () {
     function updateHourForecast(list) {
         for(var i in list) {
             var id = '#div-time'+i;
-            var icon = (i == 0)? '#50d' : '#'+list[i].icon;
+            var icon = '#'+list[i].icon;
             var iconDiv = $(id+' .hour-icon use').attr('xlink:href', icon);
 
             id += ' .hour-content';

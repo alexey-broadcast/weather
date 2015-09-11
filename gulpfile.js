@@ -26,11 +26,13 @@ cfg.src.scssDir = cfg.src.dir + 'scss/';
 cfg.src.htmlPattern = cfg.src.dir + '*.html';
 cfg.src.jsPattern = cfg.src.dir + 'js/*.js';
 cfg.src.iconPattern = cfg.src.dir + 'icons/*.svg';
+cfg.src.picPattern = cfg.src.dir + 'pics/*.*';
 
 cfg.build.dir = './build/';
 cfg.build.cssDir = cfg.build.dir + 'css/';
 cfg.build.jsDir = cfg.build.dir + 'js/';
 cfg.build.mainJsFile = 'script.js';
+cfg.build.picDir = cfg.build.dir + 'pics/';
 
 // ============== MAIN ==============
 
@@ -91,13 +93,21 @@ gulp.task('html', function () {
 });
 
 
+gulp.task('pics', function() {
+    console.log('gulp: pics');
+    gulp.src(cfg.src.picPattern)
+        .pipe(gulp.dest(cfg.build.picDir));
+});
+
+
 // watch
 gulp.task('watch', function () {
     gulp.watch(cfg.src.scssPattern, ['sass']);
     gulp.watch(cfg.src.htmlPattern, ['html']);
     gulp.watch(cfg.src.jsPattern, ['js']);
+    gulp.watch(cfg.src.picPattern, ['pics']);
 });
 
 
 // default
-gulp.task('default', ['connect', 'sass', 'js', 'html', 'watch']);
+gulp.task('default', ['connect', 'sass', 'js', 'html', 'pics', 'watch']);
