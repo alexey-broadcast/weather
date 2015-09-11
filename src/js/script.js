@@ -1,6 +1,10 @@
 $(document).ready(function () {
     var weather = Weather();
     var fn = Fn();
+    var tempK = {
+        current: 0,
+        hourList: []
+    };
 
     function initialAnimation() {
         const id = '#div-time';
@@ -10,22 +14,53 @@ $(document).ready(function () {
 
         const dur = 1200;
         const count = 200;
-        const pi6 = -Math.PI / 6;
-        const startAngle = pi6;
+        const startAngle = -Math.PI / 6;
 
         function divTimeAnimation(n) {
-            const endAngle = pi6 * (4 + n);
+            const endAngle = -Math.PI / 6 * (4 + n);
             const dAngle = (endAngle - startAngle) / count;
 
             var int = setInterval(() => {
                 var angle = startAngle + dAngle * i++;
                 $('#div-time'+n).css('right', Math.round((Math.cos(angle) * circleSize) / 2 + amend) + 'px');
                 $('#div-time'+n).css('top', Math.round((Math.sin(angle) * circleSize) / 2 + amend) + 'px');
-                if(angle <= endAngle)
+                if(angle <= endAngle) {
                     clearInterval(int);
+                }
             }, dur / count);
         }
 
+        function btnAnimation() {
+            var pos = -6;
+            const endPos = 0;
+            const dPos = (endPos - pos) / count * 4;
+            var btn = $('#btn-cf-toggle');
+            var i = 0;
+            var int = setInterval(() => {
+                ++i;
+                pos += dPos;
+                btn.css('right', pos + 'em');
+                if (pos >= endPos) {
+                    clearInterval(int);
+                }
+            }, dur / count);
+        }
+
+        function setBackground() {
+            var bg = $('.bgImgContainer');
+            var circle = $('.content-circle');
+            var url = 'url(pics/01d.jpg)';
+
+            bg.css('background-image', url);
+
+            var pos = `0 -${circle.offset().top}px`;
+            circle.css('background-position', pos);
+            circle.css('background-image', url);
+        }
+
+        //process Animations
+        setBackground();
+        btnAnimation();
         for(var i = 0; i < 5; ++i) {
             divTimeAnimation(i);
         }
@@ -54,12 +89,13 @@ $(document).ready(function () {
     }
 
     function updateWeather(res) {
-        var icon = '#'+res.icon;
+        //var icon = '#'+res.icon;
+        var icon = '#50d';
         $('.main-icon use').attr('xlink:href', icon);
 
-        var weatherStr = weather.convertTemp(res.temp, weather.FORMAT.K, weather.FORMAT.C)
+        var tempStr = weather.convertTemp(res.temp, weather.format)
                          + `&deg;${weather.format}`;
-        $('.main-temperature').html(weatherStr);
+        $('.main-temperature').html(tempStr);
 
         $('.main-description').text(res.description);
 
@@ -69,29 +105,48 @@ $(document).ready(function () {
     }
 
     function showCurrentWeather(res) {
+        tempK.current = res.temp;
         updateHeader(res);
         updateWeather(res);
     }
 
     function updateHourForecast(list) {
         for(var i in list) {
-            console.log(list[i]);
             var id = '#div-time'+i;
-            var icon = '#'+list[i].icon;
+            var icon = (i == 0)? '#50d' : '#'+list[i].icon;
             var iconDiv = $(id+' .hour-icon use').attr('xlink:href', icon);
 
-            var hourText = list[i].time + ' ' +
-                weather.convertTemp(list[i].temp, weather.FORMAT.K, weather.FORMAT.C) + `&deg;${weather.format} `;
-            $(id+' .hour-content').html(hourText);
+            id += ' .hour-content';
+            $(id+' .hour-time').text(list[i].time);
+
+            var hourTemp = weather.convertTemp(list[i].temp, weather.format) + `&deg;${weather.format} `;
+            $(id+' .hour-temp').html(hourTemp);
         }
     }
 
     function showForecast(res) {
-        //console.log(res);
-
+        tempK.hourList = res.hourList.map(item => item.temp);
         updateHourForecast(res.hourList);
         initialAnimation();
     }
+
+    function toggleCF() {
+        weather.format = weather.format === weather.FORMAT.C ? weather.FORMAT.F : weather.FORMAT.C;
+
+        var curStr = weather.convertTemp(tempK.current, weather.format)
+            + `&deg;${weather.format}`;
+        $('.main-temperature').html(curStr);
+
+        for(var i = 0; i < 5; ++i) {
+            var hourStr = weather.convertTemp(tempK.hourList[i], weather.format)
+                + `&deg;${weather.format}`;
+
+            var id = `#div-time${i} .hour-content .hour-temp`;
+            $(id).html(hourStr);
+        }
+    }
+
+    $('#btn-cf-toggle').on('click', toggleCF);
 
     weather.getCurrentWeather(showCurrentWeather);
     weather.getForecast(showForecast);

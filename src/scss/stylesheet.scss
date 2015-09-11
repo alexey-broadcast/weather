@@ -6,6 +6,7 @@
 
 body {
     font-family: 'Ubuntu', sans-serif;
+    overflow: hidden;
 }
 
 header {
@@ -15,18 +16,88 @@ header .location {
     font-size: 2em;
 }
 
+aside {
+    overflow: hidden;
+    width: 100%;
+}
+
+button {
+    margin: 1em;
+    $buttonSize: 4em;
+    width: $buttonSize;
+    height: $buttonSize;
+    border-radius: ($buttonSize / 2);
+    border: none;
+    background-color: lightblue;
+    position: relative;
+    right: -6em;
+    //top: -$buttonSize;
+}
+
 $kittenPic: "../pics/kitten.jpg";
 $circleSize: 500px;
 .main-circle {
-    //background-image: url($kittenPic);
-    //background-position: center;
     height: $circleSize;
     width: $circleSize;
-    border: 1px solid green;
     border-radius: ($circleSize / 2);
     position: absolute;
     left: (- $circleSize / 3);
     top: ($circleSize / 3);
+}
+
+.outer-circle {
+    box-sizing: border-box;
+    height: $circleSize;
+    width: $circleSize;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 175, 0.1);
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgba(0, 0, 230, 0.1);
+}
+
+.inner-circle1 {
+    $size: 82%;
+    height: $size;
+    width: $size;
+    border-radius: 50%;
+    position: absolute;
+    $offset: (100% - $size) / 2;
+    left: $offset;
+    top: $offset;
+    background-color: rgba(130, 190, 220, 0.3);
+}
+
+.inner-circle2 {
+    $size: 94%;
+    height: $size;
+    width: $size;
+    border-radius: 50%;
+    position: absolute;
+    $offset: (100% - $size) / 2;
+    left: $offset;
+    top: $offset;
+    background-color: rgba(130, 190, 220, 0.3);
+}
+
+.content-circle {
+    $size: 95%;
+    height: $size;
+    width: $size;
+    border-radius: 50%;
+    $offset: (100% - $size) / 2;
+    left: $offset;
+    top: $offset;
+    position: absolute;
+    background-color: rgba(0, 174, 0, 0.1);
+
+    box-sizing: border-box;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgba(0, 0, 255, 0.1);
 }
 
 $divTimeSize: 50px;
@@ -71,4 +142,17 @@ $divTimeSize: 50px;
 
 .br {
     border: 1px solid red;
+}
+
+.bgImgContainer {
+    overflow: hidden;
+    position: absolute;
+    z-index: -10;
+    $blurFactor: 5px;
+    $size: calc(100% + #{($blurFactor * 2)});
+    width: $size;
+    height: $size;
+    left: #{-$blurFactor};
+    top: #{-$blurFactor};
+    filter: blur(5px);
 }

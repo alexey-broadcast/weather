@@ -8,17 +8,13 @@ function Weather() {
     };
     var format = FORMAT.C;
 
-    function convertTemp(t, from, to) {
-        if(from === FORMAT.K) {
-            if(to === FORMAT.C)
-                t -= 273.15;
-            else if(to === FORMAT.F)
-                t = convertTemp(t, FORMAT.K, FORMAT.C) * 9 / 5 + 32;
-        } else if(from === FORMAT.C && to === FORMAT.F) {
-            t = t * 9 / 5 + 32;
-        } else if(from === FORMAT.F && to === FORMAT.C) {
-            t = 5 / 9 * (t - 32);
-        }
+    //convert from K to 'to'
+    function convertTemp(t, to) {
+        if(to === FORMAT.C)
+            t -= 273.15;
+        else if(to === FORMAT.F)
+            t = (t - 273.15) * 9 / 5 + 32;
+
         return Math.round(t);
     }
 
@@ -29,11 +25,9 @@ function Weather() {
                 var lat = loc[0];
                 var lon = loc[1];
 
-                //var url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=e4e476fc9e6b96aae46420bd9683296d`;
-                var url = `http://api.openweathermap.org/data/2.5/weather?id=498817&APPID=e4e476fc9e6b96aae46420bd9683296d`;
+                var url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=e4e476fc9e6b96aae46420bd9683296d`;
+                //var url = `http://api.openweathermap.org/data/2.5/weather?id=498817&APPID=e4e476fc9e6b96aae46420bd9683296d`;
                 $.getJSON(url).success(function(res) {
-                    console.log('getCurrentWeather');
-                    console.log(res);
                     cb({
                         icon: res.weather[0].icon,
                         temp: res.main.temp,
@@ -52,11 +46,9 @@ function Weather() {
                 var lat = loc[0];
                 var lon = loc[1];
 
-                //var url = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&APPID=e4e476fc9e6b96aae46420bd9683296d`;
-                var url = `http://api.openweathermap.org/data/2.5/forecast?id=498817&APPID=e4e476fc9e6b96aae46420bd9683296d`;
+                var url = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&APPID=e4e476fc9e6b96aae46420bd9683296d`;
+                //var url = `http://api.openweathermap.org/data/2.5/forecast?id=498817&APPID=e4e476fc9e6b96aae46420bd9683296d`;
                 $.getJSON(url).success(function(res) {
-                    console.log('getForecast');
-                    console.log(res);
                     var hourList = [];
                     for(var i = 0; i < 5; ++i) {
                         hourList.push({

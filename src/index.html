@@ -24,41 +24,64 @@
     <div class="datetime">CURRENT TIME</div>
     <div class="location">CURRENT CITY</div>
 </header>
-<article class="main-circle">
-    <div class="current-weather">
-        <div class="content">
-            <svg class="main-icon"><use xlink:href="#01d"/></svg>
-            <div class="main-temperature">TEMPERATURE</div>
-            <div class="main-description">DESCRIPTION</div>
-            <div class="main-wind">
-                <div class="main-wind-arrow inline-block">&darr;</div>
-                <span class="main-wind-description">WIND</span>
+<aside class="content">
+    <div><button id="btn-cf-toggle">cf</button></div>
+</aside>
+<section class="main-circle">
+    <div class="outer-circle">
+        <div class="inner-circle1">
+            <div class="inner-circle2">
+                <div class="content-circle">
+                <div class="content">
+                    <svg class="main-icon"><use xlink:href="#01d"/></svg>
+                    <div class="main-temperature">TEMPERATURE</div>
+                    <div class="main-description">DESCRIPTION</div>
+                    <div class="main-wind">
+                        <div class="main-wind-arrow inline-block">&darr;</div>
+                        <span class="main-wind-description">WIND</span>
+                    </div>
+                </div>
+                </div>
             </div>
         </div>
     </div>
     <div class="div-time" id="div-time0">
         <div class="content"><svg class="hour-icon"><use xlink:href="#02d"/></svg></div>
-        <div class="hour-content">00</div>
+        <div class="hour-content">
+            <div class="hour-time">00</div>
+            <div class="hour-temp">00</div>
+        </div>
     </div>
     <div class="div-time" id="div-time1">
         <div class="content"><svg class="hour-icon"><use xlink:href="#01n"/></svg></div>
-        <div class="hour-content">11</div>
+        <div class="hour-content">
+            <div class="hour-time">11</div>
+            <div class="hour-temp">11</div>
+        </div>
     </div>
     <div class="div-time" id="div-time2">
         <div class="content"><svg class="hour-icon"><use xlink:href="#01d"/></svg></div>
-        <div class="hour-content">22</div>
+        <div class="hour-content">
+            <div class="hour-time">22</div>
+            <div class="hour-temp">22</div>
+        </div>
     </div>
     <div class="div-time" id="div-time3">
         <div class="content"><svg class="hour-icon"><use xlink:href="#01n"/></svg></div>
-        <div class="hour-content">33</div>
+        <div class="hour-content">
+            <div class="hour-time">33</div>
+            <div class="hour-temp">33</div>
+        </div>
     </div>
     <div class="div-time" id="div-time4">
         <div class="content"><svg class="hour-icon"><use xlink:href="#01d"/></svg></div>
-        <div class="hour-content">44</div>
+        <div class="hour-content">
+            <div class="hour-time">44</div>
+            <div class="hour-temp">44</div>
+        </div>
     </div>
-
-</article>
-
+</section>
+<div class="bgImgContainer"></div>
 <!----------------------------------------------------------------------------------------------------->
 <!--------------------------------------VISIBLE CONTENTS---end----------------------------------------->
 <!----------------------------------------------------------------------------------------------------->
