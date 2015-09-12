@@ -23,7 +23,16 @@ function Weather() {
                 var lat = loc[0];
                 var lon = loc[1];
 
-                var url = `https://api.worldweatheronline.com/free/v2/weather.ashx?q=${lat},${lon}&num_of_days=2&fx24&key=e647ab75e8339699c1dc7e12fa0df&format=json&showlocaltime=yes&includelocation=yes`;
+                var params = {
+                    'q': `${lat},${lon}`,
+                    'num_of_days': 2,
+                    'fx24': true,
+                    'key': 'e647ab75e8339699c1dc7e12fa0df',
+                    'format': 'json',
+                    'showlocaltime': 'yes',
+                    'includelocation': 'yes'
+                };
+                var url = `https://api.worldweatheronline.com/free/v2/weather.ashx?` + $.param(params);
                 $.getJSON(url).success(function(res) {
                     var current = res.data.current_condition[0];
                     var code = current.weatherCode;
