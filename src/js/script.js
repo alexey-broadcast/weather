@@ -88,7 +88,6 @@ $(document).ready(function () {
         circle.css('background-image', url);
 
         var colors = fn.getColors(pic);
-        console.log(colors);
         $('button').css('background-color', colors.btnBgColor);
         $('.div-time').css('background-color', colors.btnBgColor);
         $('.outer-circle').css('background-color', colors.outerCircleColor);
