@@ -5,7 +5,7 @@ $(window).load(function () {
 $(document).ready(function () {
     var weather = Weather();
     var fn = Fn();
-    var tempK = {
+    var tempC = {
         current: 0,
         hourList: []
     };
@@ -122,7 +122,7 @@ $(document).ready(function () {
     }
 
     function showCurrentWeather(res) {
-        tempK.current = res.temp;
+        tempC.current = res.temp;
         setBackground(res.icon);
         updateHeader(res);
         updateWeather(res);
@@ -143,20 +143,25 @@ $(document).ready(function () {
     }
 
     function showForecast(res) {
-        tempK.hourList = res.hourList.map(item => item.temp);
-        updateHourForecast(res.hourList);
+        tempC.hourList = res.map(item => item.temp);
+        updateHourForecast(res);
         initialAnimation();
+    }
+
+    function showWeather(res) {
+        showCurrentWeather(res.current);
+        showForecast(res.hourList);
     }
 
     function toggleCF() {
         weather.format = weather.format === weather.FORMAT.C ? weather.FORMAT.F : weather.FORMAT.C;
 
-        var curStr = weather.convertTemp(tempK.current, weather.format)
+        var curStr = weather.convertTemp(tempC.current, weather.format)
             + `&deg;${weather.format}`;
         $('.main-temperature').html(curStr);
 
         for(var i = 0; i < 5; ++i) {
-            var hourStr = weather.convertTemp(tempK.hourList[i], weather.format)
+            var hourStr = weather.convertTemp(tempC.hourList[i], weather.format)
                 + `&deg;${weather.format}`;
 
             var id = `#div-time${i} .hour-content .hour-temp`;
@@ -166,6 +171,7 @@ $(document).ready(function () {
 
     $('#btn-cf-toggle').on('click', toggleCF);
 
-    weather.getCurrentWeather(showCurrentWeather);
-    weather.getForecast(showForecast);
+    //weather.getCurrentWeather(showCurrentWeather);
+    //weather.getForecast(showForecast);
+    weather.getWeather(showWeather);
 });

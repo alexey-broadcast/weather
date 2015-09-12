@@ -10,62 +10,63 @@ function Weather() {
 
     //convert from K to 'to'
     function convertTemp(t, to) {
-        if(to === FORMAT.C)
-            t -= 273.15;
-        else if(to === FORMAT.F)
-            t = (t - 273.15) * 9 / 5 + 32;
+        if(to === FORMAT.F)
+            t = t * 9 / 5 + 32;
 
         return Math.round(t);
     }
 
-    function getCurrentWeather(cb) {
+    function getWeather(cb) {
         $.getJSON('http://ipinfo.io')
             .success(function(location) {
                 var loc = location.loc.split(',');
                 var lat = loc[0];
                 var lon = loc[1];
 
-                var url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=e4e476fc9e6b96aae46420bd9683296d`;
-                //var url = `http://api.openweathermap.org/data/2.5/weather?id=498817&APPID=e4e476fc9e6b96aae46420bd9683296d`;
+                var url = `https://api.worldweatheronline.com/free/v2/weather.ashx?q=${lat},${lon}&num_of_days=2&fx24&key=e647ab75e8339699c1dc7e12fa0df&format=json&showlocaltime=yes&includelocation=yes`;
                 $.getJSON(url).success(function(res) {
-                    cb({
-                        icon: res.weather[0].icon,
-                        temp: res.main.temp,
-                        description: res.weather[0].description,
-                        wind: {deg: res.wind.deg, speed: res.wind.speed},
-                        location: res.name
-                    });
-                });
-            });
-    }
+                    var current = res.data.current_condition[0];
+                    var code = current.weatherCode;
+                    var resCurrent = {
+                        icon: fn.codeToIcon(code),
+                        temp: current.temp_C,
+                        description: fn.codeToDesc(code),
+                        wind: {
+                            deg: current.winddirDegree,
+                            speed: Math.round(current.windspeedKmph * 0.277777778) //convert km/h to m/s
+                        },
+                        location: res.data.nearest_area[0].areaName[0].value
+                    };
 
-    function getForecast(cb) {
-        $.getJSON('http://ipinfo.io')
-            .success(function(location) {
-                var loc = location.loc.split(',');
-                var lat = loc[0];
-                var lon = loc[1];
+                    var hourList = res.data.weather[0].hourly;
+                    while(fn.toDateMs(hourList[0].time) < +(new Date()))
+                        hourList.shift();
+                    while(hourList.length < 5) {
+                        hourList.push(res.data.weather[1].hourly[0]);
+                        res.data.weather[1].hourly.shift();
+                    }
 
-                var url = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&APPID=e4e476fc9e6b96aae46420bd9683296d`;
-                //var url = `http://api.openweathermap.org/data/2.5/forecast?id=498817&APPID=e4e476fc9e6b96aae46420bd9683296d`;
-                console.log(url);
-                $.getJSON(url).success(function(res) {
-                    //delete forecast for past hours
-                    while(res.list[0].dt * 1000 < +(new Date()))
-                        res.list.shift();
-
-                    //make view-friendly list
-                    var hourList = [];
+                    var resHourlist = [];
                     for(var i = 0; i < 5; ++i) {
-                        hourList.push({
-                            icon: res.list[i].weather[0].icon,
-                            temp: res.list[i].main.temp,
-                            description: res.list[i].weather[0].description,
-                            wind: {deg: res.list[i].wind.deg, speed: res.list[i].wind.speed},
-                            time: fn.dateString(res.list[i].dt)
+                        var timeStr = hourList[i].time.slice(0, -2) + ':' + hourList[i].time.slice(-2);
+                        resHourlist.push({
+                            icon: fn.codeToIcon(hourList[i].weatherCode, hourList[i].time),
+                            temp: hourList[i].tempC,
+                            description: fn.codeToDesc(hourList[i].weatherCode),
+                            wind: {
+                                deg: hourList[i].winddirDegree,
+                                speed: Math.round(hourList[i].windspeedKmph * 0.277777778) //convert km/h to m/s
+                            },
+                            time: timeStr
                         });
                     }
-                    cb({hourList: hourList});
+
+                    var response = {
+                        current: resCurrent,
+                        hourList: resHourlist
+                    };
+
+                    cb(response);
                 });
             });
     }
@@ -74,7 +75,6 @@ function Weather() {
         FORMAT: FORMAT,
         format: format,
         convertTemp: convertTemp,
-        getCurrentWeather: getCurrentWeather,
-        getForecast: getForecast
+        getWeather: getWeather
     }
 };
