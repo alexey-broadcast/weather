@@ -1,3 +1,7 @@
+$(window).load(function () {
+    $(".loader-background").fadeOut(500);
+});
+
 $(document).ready(function () {
     var weather = Weather();
     var fn = Fn();

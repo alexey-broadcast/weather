@@ -48,6 +48,7 @@ function Weather() {
 
                 var url = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&APPID=e4e476fc9e6b96aae46420bd9683296d`;
                 //var url = `http://api.openweathermap.org/data/2.5/forecast?id=498817&APPID=e4e476fc9e6b96aae46420bd9683296d`;
+                console.log(url);
                 $.getJSON(url).success(function(res) {
                     //delete forecast for past hours
                     while(res.list[0].dt * 1000 < +(new Date()))
