@@ -45,6 +45,7 @@ $(document).ready(function () {
             var int = setInterval(() => {
                 ++i;
                 pos += dPos;
+
                 btn.css('right', pos + 'em');
                 if (pos >= endPos) {
                     clearInterval(int);
