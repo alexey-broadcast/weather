@@ -87,15 +87,6 @@ button:active {
 //////////////////////////////////////////////////////////////////
 
 $circleSize: 500px;
-.main-circle {
-    height: $circleSize;
-    width: $circleSize;
-    border-radius: 50%;
-
-    position: absolute;
-    left: - $circleSize / 3;
-    top: $circleSize / 3;
-}
 
 .outer-circle {
     height: $circleSize;
@@ -103,8 +94,8 @@ $circleSize: 500px;
     border-radius: 50%;
 
     position: absolute;
-    left: 0;
-    top: 0;
+    left: - $circleSize / 3;
+    top: $circleSize / 3;
 
     box-sizing: border-box;
     border-style: solid;

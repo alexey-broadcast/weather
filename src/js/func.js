@@ -1,33 +1,38 @@
-function Fn() {
+// All ugly functions here
+var fn = (function Fn() {
+    "use strict";
 
     function weekDayName(day) {
         return ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][day];
     }
     
+
+
     function monthName(month) {
         return ["January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"
                ][month];
     }
 
-    function dateString(unixtime, withDate) {
-        var d;
-        if(unixtime === 0)
-            d = new Date();
-        else
-            d = new Date(unixtime * 1000);
 
-        var res = d.getHours() + ':' + d.getMinutes();
+
+    function dateString() {
+        var d = new Date();
+
+        var res = d.getHours() + ':';
         if(d.getMinutes() < 10)
             res += '0';
-        if(withDate)
-            res += ' ' +
-                weekDayName(d.getDay()) + ', ' +
-                monthName(d.getMonth()) + ' ' +
-                d.getDate() + ' ';
+        res += d.getMinutes();
+
+        res += ' ' +
+            weekDayName(d.getDay()) + ', ' +
+            monthName(d.getMonth()) + ' ' +
+            d.getDate() + ' ';
 
         return res;
     }
+
+
 
     function getColors(icon) {
         switch (icon) {
@@ -71,6 +76,8 @@ function Fn() {
                 };
         }
     }
+
+
 
     function codeToIcon(code, time) {
         var res = '';
@@ -148,6 +155,8 @@ function Fn() {
         return  res;
     }
 
+
+
     function codeToDesc(code) {
         switch (parseInt(code)) {
             case 113: return 'Clear/Sunny';
@@ -202,17 +211,43 @@ function Fn() {
         }
     }
 
-    function toDateMs(str) {//str is a 'HHmm' string
-        if(str.length < 4)
-            str = '0' + str;
+
+
+    function iconToPic(icon) {
+        var pic = icon;
+        pic = pic.replace(/0[34]/, '02');
+        pic = pic.replace(/1[01]/, '09');
+        pic = pic.replace('13n', '13d');
+        pic = pic.replace('50n', '50d');
+        return `url(pics/${pic}.jpg)`;
+    }
+
+
+
+    function toDateMs(timeStr) {//timeStr is a 'HHmm' string
+        if(timeStr.length < 4)
+            timeStr = '0' + timeStr;
 
         var d = new Date();
-        var h = parseInt(str.substr(0, 2));
-        var m = parseInt(str.substr(2));
+        var h = parseInt(timeStr.substr(0, 2));
+        var m = parseInt(timeStr.substr(2));
         d.setHours(h);
         d.setMinutes(m);
         return +d;
     }
+
+
+
+    function toTempStr(temp) {
+        //convert from Celsius to Farenheit if necessary
+        if(weather.format === weather.FORMAT.F)
+            temp = temp * 9 / 5 + 32;
+
+        temp = Math.round(temp);
+        return temp + '&deg;' + weather.format;
+    }
+
+
 
     return {
         weekDayName: weekDayName,
@@ -221,6 +256,8 @@ function Fn() {
         getColors: getColors,
         codeToIcon: codeToIcon,
         codeToDesc: codeToDesc,
-        toDateMs : toDateMs
+        toDateMs : toDateMs,
+        iconToPic: iconToPic,
+        toTempStr: toTempStr
     };
-}
+})();

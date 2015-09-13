@@ -1,57 +1,93 @@
 $(window).load(function () {
+    "use strict";
     $(".loader-background").fadeOut(500);
 });
 
 $(document).ready(function () {
-    var weather = Weather();
-    var fn = Fn();
+    "use strict";
+
     var tempC = {
         current: 0,
         hourList: []
     };
 
+
+    //  jQuery selections
+    var $outerCircle = $('.outer-circle');
+    var $contentCircle = $('.content-circle');
+    var $innerCircle1 = $('.inner-circle1');
+    var $innerCircle2 = $('.inner-circle2');
+
+    var $mainIcon = $('.main-icon');
+    var $mainTemperature = $('.main-temperature');
+    var $mainDescription = $('.main-description');
+    var $mainWindArrow = $('.main-wind-arrow');
+    var $mainWindDescription = $('.main-wind-description');
+
+    var $divHour = $('.div-time');
+
+    var $divHours = [];
+    var $divHourIcons = [];
+    var $divHourTimes = [];
+    var $divHourTemps = [];
+    for(var i = 0; i < 5; ++i) {
+        $divHours.push($('#div-time'+i));
+        $divHourIcons.push($divHours[i].find('.hour-icon use'));
+        $divHourTimes.push($divHours[i].find('.hour-content .hour-time'));
+        $divHourTemps.push($divHours[i].find('.hour-content .hour-temp'));
+    }
+
+    var $headerDt = $('header .datetime');
+    var $headerLoc = $('header .location');
+    var $button = $('button');
+    var $btnCf = $('#btn-cf-toggle');
+    var $bgImgContainer = $('.bgImgContainer');
+
+
+
     function initialAnimation() {
-        const id = '#div-time';
-        const circleSize = $('.main-circle').width();
-        var border = parseInt($('.div-time').css('borderWidth'));
-        var padding = parseInt($('.div-time').css('padding'));
-        const divTimeSize = $('.div-time').width() + 2 * (border + padding);
-        const amend = (circleSize - divTimeSize) / 2;
+        const circleSize = $outerCircle.width();
+        var border = parseInt($divHour.css('borderWidth'));
+        var padding = parseInt($divHour.css('padding'));
+        const divHourSize = $divHour.width() + 2 * (border + padding);
+        const amend = (circleSize - divHourSize) / 2;
 
         const dur = 2400;
-        const count = 200;
+        const count = 200; 
         const startAngle = -Math.PI / 6;
+
+
 
         function divTimeAnimation(n) {
             const endAngle = -Math.PI / 6 * (4 + n);
             const dAngle = (endAngle - startAngle) / count;
 
-            var int = setInterval(() => {
+            var anim = setInterval(() => {
                 var angle = startAngle + dAngle * i++;
-                $('#div-time'+n).css('right', Math.round((Math.cos(angle) * circleSize) / 2 + amend) + 'px');
-                $('#div-time'+n).css('top', Math.round((Math.sin(angle) * circleSize) / 2 + amend) + 'px');
+                $divHours[n].css('right', Math.round((Math.cos(angle) * circleSize) / 2 + amend) + 'px');
+                $divHours[n].css('top', Math.round((Math.sin(angle) * circleSize) / 2 + amend) + 'px');
                 if(angle <= endAngle) {
-                    clearInterval(int);
+                    clearInterval(anim);
                 }
             }, dur / count);
         }
+
+
 
         function btnAnimation() {
             var pos = -6;
             const endPos = 0;
             const dPos = (endPos - pos) / count * 4;
-            var btn = $('#btn-cf-toggle');
-            var i = 0;
-            var int = setInterval(() => {
-                ++i;
+            var anim = setInterval(() => {
                 pos += dPos;
 
-                btn.css('right', pos + 'em');
+                $btnCf.css('right', pos + 'em');
                 if (pos >= endPos) {
-                    clearInterval(int);
+                    clearInterval(anim);
                 }
             }, dur / count);
         }
+
 
         //process Animations
         btnAnimation();
@@ -60,15 +96,17 @@ $(document).ready(function () {
         }
     }
 
-    function setRotate(elem, angle) {
+
+
+    function setWindArrowAngle(angle) {
         if(angle === undefined) {
-            elem.hide();
+            $mainWindArrow.hide();
             return;
         }
 
-        elem.show();
+        $mainWindArrow.show();
         var rotate = `rotate(${angle}deg)`;
-        elem.css({
+        $mainWindArrow.css({
             '-webkit-transform': rotate,
             '-moz-transform': rotate,
             '-ms-transform': rotate,
@@ -77,102 +115,96 @@ $(document).ready(function () {
         });
     }
 
-    function setBackground(pic) {
-        pic = pic.replace(/0[34]/, '02');
-        pic = pic.replace(/1[01]/, '09');
-        pic = pic.replace('13n', '13d');
-        pic = pic.replace('50n', '50d');
-        var bg = $('.bgImgContainer');
-        var circle = $('.content-circle');
-        var url = `url(pics/${pic}.jpg)`;
 
-        bg.css('background-image', url);
 
-        var pos = `0 -${circle.offset().top}px`;
-        circle.css('background-position', pos);
-        circle.css('background-image', url);
+    function setBackground(icon) {
+        var url = fn.iconToPic(icon);
+        $bgImgContainer.css('background-image', url);
 
-        var colors = fn.getColors(pic);
-        $('button').css('background-color', colors.btnBgColor);
-        $('.div-time').css('background-color', colors.btnBgColor);
-        $('.outer-circle').css('background-color', colors.outerCircleColor);
-        $('.outer-circle').css('border-color', colors.outerCircleBorder);
-        $('.content-circle').css('border-color', colors.outerCircleBorder);
-        $('.inner-circle1').css('background-color', colors.innerCircleColor);
-        $('.inner-circle2').css('background-color', colors.innerCircleColor);
+        var pos = `0 -${$contentCircle.offset().top}px`;
+        $contentCircle.css('background-position', pos);
+        $contentCircle.css('background-image', url);
+
+        var colors = fn.getColors(icon);
+        $button.css('background-color', colors.btnBgColor);
+        $divHour.css('background-color', colors.btnBgColor);
+        $outerCircle.css('background-color', colors.outerCircleColor);
+        $outerCircle.css('border-color', colors.outerCircleBorder);
+        $contentCircle.css('border-color', colors.outerCircleBorder);
+        $innerCircle1.css('background-color', colors.innerCircleColor);
+        $innerCircle2.css('background-color', colors.innerCircleColor);
     }
+
+
 
     function updateHeader(res) {
-        $('header .datetime').text(fn.dateString(0, true));
-        $('header .location').text(res.location);
+        $headerDt.text(fn.dateString());
+        $headerLoc.text(res.location);
     }
 
-    function updateWeather(res) {
+
+
+    function updateCurrentWeather(res) {
         var icon = '#'+res.icon;
-        $('.main-icon use').attr('xlink:href', icon);
+        $mainIcon.find('use').attr('xlink:href', icon);
 
-        var tempStr = weather.convertTemp(res.temp, weather.format)
-                         + `&deg;${weather.format}`;
-        $('.main-temperature').html(tempStr);
+        var tempStr = fn.toTempStr(res.temp);
+        $mainTemperature.html(tempStr);
 
-        $('.main-description').text(res.description);
+        $mainDescription.text(res.description);
 
-        setRotate($('.main-wind-arrow'), res.wind.deg);
+        setWindArrowAngle(res.wind.deg);
         var windStr = res.wind.speed + ' m/s';
-        $('.main-wind-description').text(windStr);
+        $mainWindDescription.text(windStr);
     }
 
-    function showCurrentWeather(res) {
-        tempC.current = res.temp;
-        setBackground(res.icon);
-        updateHeader(res);
-        updateWeather(res);
-    }
+
 
     function updateHourForecast(list) {
         for(var i in list) {
-            var id = '#div-time'+i;
             var icon = '#'+list[i].icon;
-            var iconDiv = $(id+' .hour-icon use').attr('xlink:href', icon);
+            $divHourIcons[i].find('use').attr('xlink:href', icon);
 
-            id += ' .hour-content';
-            $(id+' .hour-time').text(list[i].time);
-
-            var hourTemp = weather.convertTemp(list[i].temp, weather.format) + `&deg;${weather.format} `;
-            $(id+' .hour-temp').html(hourTemp);
+            $divHourTimes[i].text(list[i].time);
+            $divHourTemps[i].html(fn.toTempStr(list[i].temp));
         }
     }
 
-    function showForecast(res) {
-        tempC.hourList = res.map(item => item.temp);
-        updateHourForecast(res);
+
+
+    function showWeather(res) {
+        tempC.current = res.current.temp;
+        tempC.hourList = res.hourList.map(item => item.temp);
+
+        // Show current weather
+        setBackground(res.current.icon);
+        updateHeader(res.current);
+        updateCurrentWeather(res.current);
+
+        // Show forecast on little divs
+        updateHourForecast(res.hourList);
+
         initialAnimation();
     }
 
-    function showWeather(res) {
-        showCurrentWeather(res.current);
-        showForecast(res.hourList);
-    }
+
 
     function toggleCF() {
-        weather.format = weather.format === weather.FORMAT.C ? weather.FORMAT.F : weather.FORMAT.C;
+        //toggle format
+        if(weather.format === weather.FORMAT.C)
+            weather.format = weather.FORMAT.F;
+        else
+            weather.format = weather.FORMAT.C;
 
-        var curStr = weather.convertTemp(tempC.current, weather.format)
-            + `&deg;${weather.format}`;
-        $('.main-temperature').html(curStr);
+        //update data on screen
+        $mainTemperature.html(curStr);
 
-        for(var i = 0; i < 5; ++i) {
-            var hourStr = weather.convertTemp(tempC.hourList[i], weather.format)
-                + `&deg;${weather.format}`;
-
-            var id = `#div-time${i} .hour-content .hour-temp`;
-            $(id).html(hourStr);
-        }
+        for(var i = 0; i < 5; ++i)
+            $divHours[i].find('.hour-content .hour-temp').html(fn.toTempStr(tempC.hourList[i]));
     }
 
-    $('#btn-cf-toggle').on('click', toggleCF);
 
-    //weather.getCurrentWeather(showCurrentWeather);
-    //weather.getForecast(showForecast);
+
+    $btnCf.on('click', toggleCF);
     weather.getWeather(showWeather);
 });
