@@ -1,28 +1,28 @@
-
-//////////////////////////////////////////////////////////////////
-//////////////////////////// MAIN ////////////////////////////////
-//////////////////////////////////////////////////////////////////
-
 $textColor: white;
 $btnBgColor: white;
 $outerCircleColor: white;
 $outerCircleBorder: white;
 $innerCircleColor: white;
+$shadowColor: rgba(0, 0, 0, 0.2);
+
+ 
 
 body {
     font-family: 'Ubuntu', sans-serif;
     color: $textColor;
     overflow: hidden;
 }
+
 svg {
     fill: $textColor;
 }
 
 header {
     padding: 1em;
-}
-header .location {
-    font-size: 2em;
+
+    .location {
+        font-size: 2em;
+    }
 }
 
 aside {
@@ -30,48 +30,84 @@ aside {
     width: 100%;
 }
 
-button {
+footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 1.5em;
+    padding: .5em;
     color: $textColor;
-    margin: 1em;
-    $buttonSize: 4em;
-    width: $buttonSize;
-    height: $buttonSize;
-    border-radius: ($buttonSize / 2);
+}
+
+a {
+    color: $textColor;
+}
+
+a:visited {
+    color: $textColor;
+}
+
+
+
+
+
+//////////////////////////////////////////////////////////////////
+//////////////////////////// BUTTTON /////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+$btnShadow: 6px;
+button {
+    $btnSize: 4em;
+    width: $btnSize;
+    height: $btnSize;
+    border-radius: 50%;
+
     border: none;
-    background-color: $btnBgColor;
+    margin: 1em;
     position: relative;
-    right: -6em;
-    box-shadow: 0 6px 6px 2px rgba(0, 0, 0, 0.2);
+
+    color: $textColor;
+    background-color: $btnBgColor;
+    box-shadow: 0 $btnShadow $btnShadow 2px $shadowColor;
 }
 button:focus {
     outline: none;
 }
 button:active {
-    box-shadow: 0 3px 3px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 ($btnShadow / 2) ($btnShadow / 2) 2px $shadowColor;
 }
 
-$circleSize: 500px;
-.main-circle {
-    height: $circleSize;
-    width: $circleSize;
-    border-radius: ($circleSize / 2);
-    position: absolute;
-    left: (- $circleSize / 3);
-    top: ($circleSize / 3);
-}
 
-.outer-circle {
-    box-sizing: border-box;
-    height: $circleSize;
-    width: $circleSize;
-    border-radius: 50%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    background-color: $outerCircleColor;
-    border-style: solid;
-    border-width: 2px;
-    border-color: $outerCircleBorder;
+
+
+
+
+//////////////////////////////////////////////////////////////////
+//////////////////////// BIG CIRCLE //////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+
+@for $i from 2 through 5 {
+    @media all and (max-height: (200px * $i)) {
+        $circleSize: 100px * $i;
+
+        .outer-circle {
+            height: $circleSize;
+            width: $circleSize;
+            border-radius: 50%;
+
+            position: absolute;
+            left: - $circleSize / 3;
+            top: $circleSize / 3;
+
+            box-sizing: border-box;
+            border-style: solid;
+            border-width: 2px;
+
+            border-color: $outerCircleBorder;
+            background-color: $outerCircleColor;
+        }
+    }
 }
 
 .inner-circle1 {
@@ -79,10 +115,12 @@ $circleSize: 500px;
     height: $size;
     width: $size;
     border-radius: 50%;
-    position: absolute;
+
     $offset: (100% - $size) / 2;
+    position: absolute;
     left: $offset;
     top: $offset;
+
     background-color: $innerCircleColor;
 }
 
@@ -91,10 +129,12 @@ $circleSize: 500px;
     height: $size;
     width: $size;
     border-radius: 50%;
-    position: absolute;
+
     $offset: (100% - $size) / 2;
+    position: absolute;
     left: $offset;
     top: $offset;
+
     background-color: $innerCircleColor;
 }
 
@@ -103,24 +143,36 @@ $circleSize: 500px;
     height: $size;
     width: $size;
     border-radius: 50%;
+
     $offset: (100% - $size) / 2;
+    position: absolute;
     left: $offset;
     top: $offset;
-    position: absolute;
 
     box-sizing: border-box;
+
     border: 2px solid $outerCircleBorder;
 }
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////
+////////////////////// SMALL CIRCLES /////////////////////////////
+//////////////////////////////////////////////////////////////////
 
 $divTimeBorder: 2px;
 $divTimePadding: 10px;
 $divTimeSize: 50px - 2 * ($divTimeBorder + $divTimePadding);
 .div-time {
-    position: absolute;
-    padding: $divTimePadding;
     height: $divTimeSize;
     width: $divTimeSize;
     border-radius: 50%;
+
+    position: absolute;
+    padding: $divTimePadding;
 
     background-color: $btnBgColor;
     border: $divTimeBorder solid $textColor;
@@ -130,6 +182,7 @@ $divTimeSize: 50px - 2 * ($divTimeBorder + $divTimePadding);
     position: absolute;
     top: 50%;
     left: 50%;
+
     transform: translate(-50%, -50%);
 }
 
@@ -144,6 +197,15 @@ $divTimeSize: 50px - 2 * ($divTimeBorder + $divTimePadding);
     left: 130%;
 }
 
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////
+////////////////////// ??????????    /////////////////////////////
+//////////////////////////////////////////////////////////////////
 
 .content div {
     text-align: right;
@@ -162,10 +224,6 @@ $divTimeSize: 50px - 2 * ($divTimeBorder + $divTimePadding);
     display: inline-block;
 }
 
-.br {
-    border: 1px solid red;
-}
-
 .bgImgContainer {
     overflow: hidden;
     position: absolute;
@@ -179,21 +237,9 @@ $divTimeSize: 50px - 2 * ($divTimeBorder + $divTimePadding);
     filter: blur(5px);
 }
 
-footer {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    height: 1.5em;
-    padding: .5em;
-    color: $textColor;
-}
 
-a {
-    color: $textColor;
-}
-a:visited {
-    color: $textColor;
-}
+
+
 
 ////////////////////////////////////////////////////////////////
 /////////////////////////// LOADER /////////////////////////////
@@ -229,33 +275,12 @@ $loadSize: 150px;
     position: absolute;
 }
 
-
-#loader-item-1{
-    animation: object 2s linear infinite;
-}
-#loader-item-2{
-    animation: object 2s linear infinite -.4s;
-}
-#loader-item-3{
-    animation: object 2s linear infinite -.8s;
-}
-#loader-item-4{
-    animation: object 2s linear infinite -1.2s;
-}
-#loader-item-5{
-    animation: object 2s linear infinite -1.6s;
+@for $i from 1 through 5 {
+    #loader-item-#{$i} {
+        animation:object 2s linear infinite #{-.4 * ($i - 1)}s;
+    }
 }
 
-
-@-webkit-keyframes object{
-    0% { left: 100px; top:0}
-    80% { left: 0; top:0;}
-    85% { left: 0; top: -20px; width: 20px; height: 20px;}
-    90% { width: 40px; height: 15px; }
-    95% { left: 100px; top: -20px; width: 20px; height: 20px;}
-    100% { left: 100px; top:0; }
-
-}
 @keyframes object{
     0% { left: 100px; top:0}
     80% { left: 0; top:0;}
@@ -265,3 +290,4 @@ $loadSize: 150px;
     100% { left: 100px; top:0; }
 }
 
+ 

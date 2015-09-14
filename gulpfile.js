@@ -39,10 +39,10 @@ cfg.build.picDir = cfg.build.dir + 'pics/';
 
 //connect
 gulp.task('connect', function () {
-    connect.server({
-        root: cfg.build.dir,
-        livereload: true
-    });
+    //connect.server({
+    //    root: cfg.build.dir,
+    //    livereload: true
+    //});
 });
 
 
@@ -57,7 +57,7 @@ gulp.task('sass', function () {
         .pipe(autoprefixer('last 15 versions'))
         //.pipe(minifyCss())
         .pipe(gulp.dest(cfg.build.cssDir))
-        .pipe(connect.reload());
+        //.pipe(connect.reload());
 });
 
 
@@ -70,7 +70,7 @@ gulp.task('js', function () {
         .pipe(traceur())
         //.pipe(uglify())
         .pipe(gulp.dest(cfg.build.jsDir))
-        .pipe(connect.reload());
+        //.pipe(connect.reload());
 });
 
 
@@ -89,7 +89,7 @@ gulp.task('html', function () {
         .pipe(plumber())
         .pipe(inject(svgs, { transform: fileContents }))
         .pipe(gulp.dest(cfg.build.dir))
-        .pipe(connect.reload());
+        //.pipe(connect.reload());
 });
 
 

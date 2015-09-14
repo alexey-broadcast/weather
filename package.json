@@ -28,5 +28,9 @@
     "gulp-svgstore": "^5.0.4",
     "gulp-traceur": "^0.17.1",
     "gulp-uglify": "^1.4.0"
+  },
+  "jshintConfig": {
+    "esnext": true,
+    "asi": true
   }
 }

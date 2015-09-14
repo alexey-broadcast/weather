@@ -1,2 +1,5 @@
 .idea
 node_modules
+build
+weather.sublime-project
+weather.sublime-workspace
