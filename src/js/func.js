@@ -213,13 +213,17 @@ var fn = (function Fn() {
 
 
 
-    function iconToPic(icon) {
+    function iconToPic(icon, withUrl) {
         var pic = icon;
         pic = pic.replace(/0[34]/, '02');
         pic = pic.replace(/1[01]/, '09');
         pic = pic.replace('13n', '13d');
         pic = pic.replace('50n', '50d');
-        return `url(pics/${pic}.jpg)`;
+
+        if(withUrl)
+            return `url(pics/${pic}.jpg)`;
+        else
+            return `pics/${pic}.jpg`;
     }
 
 

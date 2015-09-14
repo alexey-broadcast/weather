@@ -117,9 +117,11 @@ var painter = (function () {
 
 
     function setBackground(icon) {
-        var url = fn.iconToPic(icon);
+        console.log('setBackground');
+        var url = fn.iconToPic(icon, true);
+
         $bgImgContainer.css('background-image', url);
-        $bgImgContainer.load(hideLoader);
+        hideLoader();
 
         var pos = `0 -${$contentCircle.offset().top}px`;
         $contentCircle.css('background-position', pos);
@@ -176,15 +178,25 @@ var painter = (function () {
         tempC.current = res.current.temp;
         tempC.hourList = res.hourList.map(item => item.temp);
 
-        // Show current weather
-        setBackground(res.current.icon);
-        updateHeader(res.current);
-        updateCurrentWeather(res.current);
+        //Load background image, THEN do anything else
+        $bgImgContainer.append('<img/>');
 
-        // Show forecast on little divs
-        updateHourForecast(res.hourList);
+        var url = fn.iconToPic(res.current.icon);
+        var $tmpImg = $bgImgContainer.find('img');
 
-        initialAnimation();
+        $tmpImg.attr('src', url).load(function() {
+            $tmpImg.remove(); // prevent memory leaks
+
+            // Show current weather
+            setBackground(res.current.icon);
+            updateHeader(res.current);
+            updateCurrentWeather(res.current);
+
+            // Show forecast on little divs
+            updateHourForecast(res.hourList);
+
+            initialAnimation();
+        });
     }
 
 

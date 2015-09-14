@@ -86,29 +86,55 @@ button:active {
 //////////////////////// BIG CIRCLE //////////////////////////////
 //////////////////////////////////////////////////////////////////
 
+.outer-circle {
+    border-radius: 50%;
 
-@for $i from 2 through 5 {
-    @media all and (max-height: (200px * $i)) {
-        $circleSize: 100px * $i;
+    position: absolute;
+
+    box-sizing: border-box;
+    border-style: solid;
+    border-width: 2px;
+
+    border-color: $outerCircleBorder;
+    background-color: $outerCircleColor;
+}
+
+@media (min-height: 1px) {
+    $circleSize: 300px;
+
+    .outer-circle {
+        height: $circleSize;
+        width: $circleSize;
+
+        left: - $circleSize / 3;
+        top: $circleSize / 3;
+    }
+}
+
+@for $i from 3 through 5 {
+    @media (min-height: (200px * $i)) {
+        $circleSize: 100px * $i + 100px;
 
         .outer-circle {
             height: $circleSize;
             width: $circleSize;
-            border-radius: 50%;
 
-            position: absolute;
-            left: - $circleSize / 3;
+            // left: - $circleSize / 3;
             top: $circleSize / 3;
-
-            box-sizing: border-box;
-            border-style: solid;
-            border-width: 2px;
-
-            border-color: $outerCircleBorder;
-            background-color: $outerCircleColor;
         }
     }
 }
+// @media (min-height: 1000px) and (max-height: 10000px) {
+//     $circleSize: 600px;
+
+//     .outer-circle {
+//         height: $circleSize;
+//         width: $circleSize;
+
+//         left: - $circleSize / 3;
+//         top: $circleSize / 3;
+//     }
+// }
 
 .inner-circle1 {
     $size: 82%;
@@ -154,6 +180,14 @@ button:active {
     border: 2px solid $outerCircleBorder;
 }
 
+.main-wind-description {
+    padding-left: .3em;
+}
+
+.main-text {
+    margin-right: 1.5em;
+    font-size: 1.5em;
+}
 
 
 
@@ -209,15 +243,6 @@ $divTimeSize: 50px - 2 * ($divTimeBorder + $divTimePadding);
 
 .content div {
     text-align: right;
-}
-
-.main-wind-description {
-    padding-left: .3em;
-}
-
-.main-text {
-    margin-right: 1.5em;
-    font-size: 1.5em;
 }
 
 .inline-block {
