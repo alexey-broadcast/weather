@@ -49,73 +49,42 @@ button:active {
   -webkit-box-shadow: 0 3px 3px 2px rgba(0, 0, 0, 0.2);
           box-shadow: 0 3px 3px 2px rgba(0, 0, 0, 0.2); }
 
-@media all and (max-height: 400px) {
-  .outer-circle {
-    height: 200px;
-    width: 200px;
-    -webkit-border-radius: 50%;
-            border-radius: 50%;
-    position: absolute;
-    left: -66.66667px;
-    top: 66.66667px;
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
-    border-style: solid;
-    border-width: 2px;
-    border-color: white;
-    background-color: white; } }
+.outer-circle {
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
+  position: absolute;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  border-style: solid;
+  border-width: 2px;
+  border-color: white;
+  background-color: white; }
 
-@media all and (max-height: 600px) {
+@media (min-height: 1px) {
   .outer-circle {
     height: 300px;
     width: 300px;
-    -webkit-border-radius: 50%;
-            border-radius: 50%;
-    position: absolute;
     left: -100px;
-    top: 100px;
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
-    border-style: solid;
-    border-width: 2px;
-    border-color: white;
-    background-color: white; } }
+    top: 100px; } }
 
-@media all and (max-height: 800px) {
+@media (min-height: 600px) {
   .outer-circle {
     height: 400px;
     width: 400px;
-    -webkit-border-radius: 50%;
-            border-radius: 50%;
-    position: absolute;
-    left: -133.33333px;
-    top: 133.33333px;
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
-    border-style: solid;
-    border-width: 2px;
-    border-color: white;
-    background-color: white; } }
+    top: 133.33333px; } }
 
-@media all and (max-height: 1000px) {
+@media (min-height: 800px) {
   .outer-circle {
     height: 500px;
     width: 500px;
-    -webkit-border-radius: 50%;
-            border-radius: 50%;
-    position: absolute;
-    left: -166.66667px;
-    top: 166.66667px;
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
-    border-style: solid;
-    border-width: 2px;
-    border-color: white;
-    background-color: white; } }
+    top: 166.66667px; } }
+
+@media (min-height: 1000px) {
+  .outer-circle {
+    height: 600px;
+    width: 600px;
+    top: 200px; } }
 
 .inner-circle1 {
   height: 82%;
@@ -150,6 +119,13 @@ button:active {
           box-sizing: border-box;
   border: 2px solid white; }
 
+.main-wind-description {
+  padding-left: .3em; }
+
+.main-text {
+  margin-right: 1.5em;
+  font-size: 1.5em; }
+
 .div-time {
   height: 26px;
   width: 26px;
@@ -179,13 +155,6 @@ button:active {
 
 .content div {
   text-align: right; }
-
-.main-wind-description {
-  padding-left: .3em; }
-
-.main-text {
-  margin-right: 1.5em;
-  font-size: 1.5em; }
 
 .inline-block {
   display: inline-block; }

@@ -375,7 +375,7 @@ var painter = (function() {
   function setBackground(icon) {
     var url = fn.iconToPic(icon);
     $bgImgContainer.css('background-image', url);
-    $bgImgContainer.load(hideLoader);
+    hideLoader();
     var pos = ("0 -" + $contentCircle.offset().top + "px");
     $contentCircle.css('background-position', pos);
     $contentCircle.css('background-image', url);
@@ -415,11 +415,17 @@ var painter = (function() {
     tempC.hourList = res.hourList.map(function(item) {
       return item.temp;
     });
-    setBackground(res.current.icon);
-    updateHeader(res.current);
-    updateCurrentWeather(res.current);
-    updateHourForecast(res.hourList);
-    initialAnimation();
+    $bgImgContainer.append('<img/>');
+    var url = fn.iconToPic(res.current.icon);
+    var $tmpImg = $bgImgContainer.find('<img/>');
+    $tmpImg.attr('src', url).load(function() {
+      $tmpImg.remove();
+      setBackground(res.current.icon);
+      updateHeader(res.current);
+      updateCurrentWeather(res.current);
+      updateHourForecast(res.hourList);
+      initialAnimation();
+    });
   }
   function toggleCF() {
     if (weather.format === weather.FORMAT.C)
