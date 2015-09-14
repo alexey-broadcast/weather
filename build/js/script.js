@@ -352,7 +352,6 @@ var painter = (function() {
       }, dur / count);
     }
     console.log('process Animations...');
-    hideLoader();
     btnAnimation();
     for (var i = 0; i < 5; ++i) {
       divTimeAnimation(i);
@@ -376,6 +375,7 @@ var painter = (function() {
   function setBackground(icon) {
     var url = fn.iconToPic(icon);
     $bgImgContainer.css('background-image', url);
+    $bgImgContainer.load(hideLoader);
     var pos = ("0 -" + $contentCircle.offset().top + "px");
     $contentCircle.css('background-position', pos);
     $contentCircle.css('background-image', url);
