@@ -1,16 +1,10 @@
-$(window).load(function () {
-    "use strict";
-    $(".loader-background").fadeOut(500);
-});
-
-$(document).ready(function () {
+var painter = (function () {
     "use strict";
 
     var tempC = {
         current: 0,
         hourList: []
     };
-
 
     //  jQuery selections
     var $outerCircle = $('.outer-circle');
@@ -25,7 +19,6 @@ $(document).ready(function () {
     var $mainWindDescription = $('.main-wind-description');
 
     var $divHour = $('.div-time');
-
     var $divHours = [];
     var $divHourIcons = [];
     var $divHourTimes = [];
@@ -42,6 +35,11 @@ $(document).ready(function () {
     var $button = $('button');
     var $btnCf = $('#btn-cf-toggle');
     var $bgImgContainer = $('.bgImgContainer');
+    var $loader = $(".loader-background");
+
+    function hideLoader() {
+        $loader.fadeOut(500);        
+    }
 
 
 
@@ -90,6 +88,8 @@ $(document).ready(function () {
 
 
         //process Animations
+        console.log('process Animations...');
+        hideLoader();
         btnAnimation();
         for(var i = 0; i < 5; ++i) {
             divTimeAnimation(i);
@@ -205,6 +205,8 @@ $(document).ready(function () {
 
 
 
-    $btnCf.on('click', toggleCF);
-    weather.getWeather(showWeather);
-});
+    return {
+        showWeather: showWeather,
+        toggleCF: toggleCF
+    }
+})();

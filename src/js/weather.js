@@ -63,6 +63,7 @@ var weather = (function Weather() {
 
 
     function processLocation(location, cb) {
+        console.log('processLocation '+ typeof cb);
         var loc = location.loc.split(',');
         var lat = loc[0];
         var lon = loc[1];
