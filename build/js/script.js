@@ -241,13 +241,16 @@ var fn = (function Fn() {
         return '';
     }
   }
-  function iconToPic(icon) {
+  function iconToPic(icon, withUrl) {
     var pic = icon;
     pic = pic.replace(/0[34]/, '02');
     pic = pic.replace(/1[01]/, '09');
     pic = pic.replace('13n', '13d');
     pic = pic.replace('50n', '50d');
-    return ("url(pics/" + pic + ".jpg)");
+    if (withUrl)
+      return ("url(pics/" + pic + ".jpg)");
+    else
+      return ("pics/" + pic + ".jpg");
   }
   function toDateMs(timeStr) {
     if (timeStr.length < 4)
@@ -373,7 +376,8 @@ var painter = (function() {
     });
   }
   function setBackground(icon) {
-    var url = fn.iconToPic(icon);
+    console.log('setBackground');
+    var url = fn.iconToPic(icon, true);
     $bgImgContainer.css('background-image', url);
     hideLoader();
     var pos = ("0 -" + $contentCircle.offset().top + "px");
@@ -417,7 +421,7 @@ var painter = (function() {
     });
     $bgImgContainer.append('<img/>');
     var url = fn.iconToPic(res.current.icon);
-    var $tmpImg = $bgImgContainer.find('<img/>');
+    var $tmpImg = $bgImgContainer.find('img');
     $tmpImg.attr('src', url).load(function() {
       $tmpImg.remove();
       setBackground(res.current.icon);
