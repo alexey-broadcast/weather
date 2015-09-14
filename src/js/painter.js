@@ -89,7 +89,6 @@ var painter = (function () {
 
         //process Animations
         console.log('process Animations...');
-        hideLoader();
         btnAnimation();
         for(var i = 0; i < 5; ++i) {
             divTimeAnimation(i);
@@ -120,6 +119,7 @@ var painter = (function () {
     function setBackground(icon) {
         var url = fn.iconToPic(icon);
         $bgImgContainer.css('background-image', url);
+        $bgImgContainer.load(hideLoader);
 
         var pos = `0 -${$contentCircle.offset().top}px`;
         $contentCircle.css('background-position', pos);
