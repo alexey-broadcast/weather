@@ -119,7 +119,7 @@ button:active {
             height: $circleSize;
             width: $circleSize;
 
-            // left: - $circleSize / 3;
+            left: - $circleSize / 3;
             top: $circleSize / 3;
         }
     }
@@ -182,6 +182,11 @@ button:active {
 
 .main-wind-description {
     padding-left: .3em;
+}
+
+.main-icon {
+    width: 100%;
+    height: 100%;
 }
 
 .main-text {
