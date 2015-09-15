@@ -72,18 +72,21 @@ button:active {
   .outer-circle {
     height: 400px;
     width: 400px;
+    left: -133.33333px;
     top: 133.33333px; } }
 
 @media (min-height: 800px) {
   .outer-circle {
     height: 500px;
     width: 500px;
+    left: -166.66667px;
     top: 166.66667px; } }
 
 @media (min-height: 1000px) {
   .outer-circle {
     height: 600px;
     width: 600px;
+    left: -200px;
     top: 200px; } }
 
 .inner-circle1 {
@@ -121,6 +124,10 @@ button:active {
 
 .main-wind-description {
   padding-left: .3em; }
+
+.main-icon {
+  width: 100%;
+  height: 100%; }
 
 .main-text {
   margin-right: 1.5em;
