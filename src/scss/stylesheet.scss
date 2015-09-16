@@ -118,7 +118,6 @@ button:active {
 
     $fontSize: 1em;
     .main-text {
-        margin-right: $fontSize;
         font-size: $fontSize;
     }
 }
@@ -142,7 +141,6 @@ button:active {
 
         $fontSize: 1em + 0.1em * $i;
         .main-text {
-            margin-right: $fontSize;
             font-size: $fontSize;
         }
     }
