@@ -33,7 +33,7 @@ var painter = (function () {
     var $headerDt = $('header .datetime');
     var $headerLoc = $('header .location');
     var $button = $('button');
-    var $btnCf = $('#btn-cf-toggle');
+    var $btnCf = $('#btn-cf');
     var $bgImgContainer = $('.bgImgContainer');
     var $loader = $(".loader-background");
 
@@ -48,7 +48,7 @@ var painter = (function () {
         var border = parseInt($divHour.css('borderWidth'));
         var padding = parseInt($divHour.css('padding'));
         const divHourSize = $divHour.width() + 2 * (border + padding);
-        const amend = (circleSize - divHourSize) / 2;
+        const amend = `50% - ${divHourSize}px / 2`;
 
         const dur = 2400;
         const count = 200; 
@@ -56,42 +56,43 @@ var painter = (function () {
 
 
 
-        function divTimeAnimation(n) {
-            const endAngle = -Math.PI / 6 * (4 + n);
-            const dAngle = (endAngle - startAngle) / count;
+        // function divTimeAnimation(n) {
+        //     const endAngle = -Math.PI / 6 * (4 + n);
+        //     const dAngle = (endAngle - startAngle) / count;
 
-            var anim = setInterval(() => {
-                var angle = startAngle + dAngle * i++;
-                $divHours[n].css('right', Math.round((Math.cos(angle) * circleSize) / 2 + amend) + 'px');
-                $divHours[n].css('top', Math.round((Math.sin(angle) * circleSize) / 2 + amend) + 'px');
-                if(angle <= endAngle) {
-                    clearInterval(anim);
-                }
-            }, dur / count);
-        }
+        //     var anim = setInterval(() => {
+        //         var angle = startAngle + dAngle * i++;
+        //         $divHours[n].css('right', 'calc('+Math.round(Math.cos(angle) * 100) / 2+'% + ' + amend + ')');
+        //         $divHours[n].css('top',   'calc('+Math.round(Math.sin(angle) * 100) / 2+'% + ' + amend + ')');
+        //         if(angle <= endAngle) {
+        //             clearInterval(anim);
+        //         }
+        //     }, dur / count);
+        // }
 
 
 
-        function btnAnimation() {
-            var pos = -6;
-            const endPos = 0;
-            const dPos = (endPos - pos) / count * 4;
-            var anim = setInterval(() => {
-                pos += dPos;
+        // function btnAnimation() {
+        //     var pos = -6;
+        //     const endPos = 0;
+        //     const dPos = (endPos - pos) / count * 4;
+        //     var anim = setInterval(() => {
+        //         pos += dPos;
 
-                $btnCf.css('right', pos + 'em');
-                if (pos >= endPos) {
-                    clearInterval(anim);
-                }
-            }, dur / count);
-        }
-
+        //         $btnCf.css('right', pos + 'em');
+        //         if (pos >= endPos) {
+        //             clearInterval(anim);
+        //         }
+        //     }, dur / count);
+        // }
+        $btnCf.addClass('inited');
 
         //process Animations
         console.log('process Animations...');
-        btnAnimation();
+        // btnAnimation();
         for(var i = 0; i < 5; ++i) {
-            divTimeAnimation(i);
+            // divTimeAnimation(i);
+            $divHours[i].addClass('inited');
         }
     }
 
@@ -209,7 +210,7 @@ var painter = (function () {
             weather.format = weather.FORMAT.C;
 
         //update data on screen
-        $mainTemperature.html(curStr);
+        $mainTemperature.html(fn.toTempStr(tempC.current));
 
         for(var i = 0; i < 5; ++i)
             $divHours[i].find('.hour-content .hour-temp').html(fn.toTempStr(tempC.hourList[i]));

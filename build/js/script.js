@@ -315,7 +315,7 @@ var painter = (function() {
   var $headerDt = $('header .datetime');
   var $headerLoc = $('header .location');
   var $button = $('button');
-  var $btnCf = $('#btn-cf-toggle');
+  var $btnCf = $('#btn-cf');
   var $bgImgContainer = $('.bgImgContainer');
   var $loader = $(".loader-background");
   function hideLoader() {
@@ -326,38 +326,14 @@ var painter = (function() {
     var border = parseInt($divHour.css('borderWidth'));
     var padding = parseInt($divHour.css('padding'));
     var divHourSize = $divHour.width() + 2 * (border + padding);
-    var amend = (circleSize - divHourSize) / 2;
+    var amend = ("50% - " + divHourSize + "px / 2");
     var dur = 2400;
     var count = 200;
     var startAngle = -Math.PI / 6;
-    function divTimeAnimation(n) {
-      var endAngle = -Math.PI / 6 * (4 + n);
-      var dAngle = (endAngle - startAngle) / count;
-      var anim = setInterval(function() {
-        var angle = startAngle + dAngle * i++;
-        $divHours[n].css('right', Math.round((Math.cos(angle) * circleSize) / 2 + amend) + 'px');
-        $divHours[n].css('top', Math.round((Math.sin(angle) * circleSize) / 2 + amend) + 'px');
-        if (angle <= endAngle) {
-          clearInterval(anim);
-        }
-      }, dur / count);
-    }
-    function btnAnimation() {
-      var pos = -6;
-      var endPos = 0;
-      var dPos = (endPos - pos) / count * 4;
-      var anim = setInterval(function() {
-        pos += dPos;
-        $btnCf.css('right', pos + 'em');
-        if (pos >= endPos) {
-          clearInterval(anim);
-        }
-      }, dur / count);
-    }
+    $btnCf.addClass('inited');
     console.log('process Animations...');
-    btnAnimation();
     for (var i = 0; i < 5; ++i) {
-      divTimeAnimation(i);
+      $divHours[i].addClass('inited');
     }
   }
   function setWindArrowAngle(angle) {
@@ -436,7 +412,7 @@ var painter = (function() {
       weather.format = weather.FORMAT.F;
     else
       weather.format = weather.FORMAT.C;
-    $mainTemperature.html(curStr);
+    $mainTemperature.html(fn.toTempStr(tempC.current));
     for (var i = 0; i < 5; ++i)
       $divHours[i].find('.hour-content .hour-temp').html(fn.toTempStr(tempC.hourList[i]));
   }
