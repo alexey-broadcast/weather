@@ -56,19 +56,19 @@ var painter = (function () {
 
 
 
-        function divTimeAnimation(n) {
-            const endAngle = -Math.PI / 6 * (4 + n);
-            const dAngle = (endAngle - startAngle) / count;
+        // function divTimeAnimation(n) {
+        //     const endAngle = -Math.PI / 6 * (4 + n);
+        //     const dAngle = (endAngle - startAngle) / count;
 
-            var anim = setInterval(() => {
-                var angle = startAngle + dAngle * i++;
-                $divHours[n].css('right', 'calc('+Math.round(Math.cos(angle) * 100) / 2+'% + ' + amend + ')');
-                $divHours[n].css('top',   'calc('+Math.round(Math.sin(angle) * 100) / 2+'% + ' + amend + ')');
-                if(angle <= endAngle) {
-                    clearInterval(anim);
-                }
-            }, dur / count);
-        }
+        //     var anim = setInterval(() => {
+        //         var angle = startAngle + dAngle * i++;
+        //         $divHours[n].css('right', 'calc('+Math.round(Math.cos(angle) * 100) / 2+'% + ' + amend + ')');
+        //         $divHours[n].css('top',   'calc('+Math.round(Math.sin(angle) * 100) / 2+'% + ' + amend + ')');
+        //         if(angle <= endAngle) {
+        //             clearInterval(anim);
+        //         }
+        //     }, dur / count);
+        // }
 
 
 
@@ -91,7 +91,8 @@ var painter = (function () {
         console.log('process Animations...');
         // btnAnimation();
         for(var i = 0; i < 5; ++i) {
-            divTimeAnimation(i);
+            // divTimeAnimation(i);
+            $divHours[i].addClass('inited');
         }
     }
 

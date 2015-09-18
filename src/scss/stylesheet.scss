@@ -134,6 +134,15 @@ $btnShadow: 6px;
     .main-text {
         font-size: $fontSize;
     }
+
+    @for $t from 0 through 4 {
+        #div-time#{$t}.inited {
+            $angle:  0.33333turn + $t * 0.08333turn;
+            transform: rotate($angle) 
+                translate(- $circleSize / 2)
+                rotate(- $angle);
+        }    
+    }
 }
 
 @for $i from 3 through 5 {
@@ -157,19 +166,18 @@ $btnShadow: 6px;
         .main-text {
             font-size: $fontSize;
         }
+
+
+        @for $t from 0 through 4 {
+            #div-time#{$t}.inited {
+                $angle:  0.33333turn + $t * 0.08333turn;
+                transform: rotate($angle) 
+                    translate(- $circleSize / 2)
+                    rotate(- $angle);
+            }    
+        }
     }
 }
-// @media (min-height: 1000px) and (max-height: 10000px) {
-//     $circleSize: 600px;
-
-//     .outer-circle {
-//         height: $circleSize;
-//         width: $circleSize;
-
-//         left: - $circleSize / 3;
-//         top: $circleSize / 3;
-//     }
-// }
 
 .inner-circle1 {
     $size: 82%;
@@ -237,28 +245,34 @@ $btnShadow: 6px;
 ////////////////////// SMALL CIRCLES /////////////////////////////
 //////////////////////////////////////////////////////////////////
 
+
 $divTimeBorder: 2px;
 $divTimePadding: 10px;
-$divTimeSize: 50px - 2 * ($divTimeBorder + $divTimePadding);
+$divTimeFullSize: 50px;
+$divTimeSize: $divTimeFullSize - 2 * ($divTimeBorder + $divTimePadding);
+$circleSize: 250px;
 .div-time {
     height: $divTimeSize;
     width: $divTimeSize;
     border-radius: 50%;
 
     position: absolute;
+    left: calc(50% - #{$divTimeFullSize / 2});
+    top: calc(50% - #{$divTimeFullSize / 2});
     padding: $divTimePadding;
 
     background-color: $btnBgColor;
     border: $divTimeBorder solid $textColor;
-}
 
-.content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+    // animation: rot 3s 1 linear;
+    transform: rotate(0) 
+        translate(- $circleSize)
+        rotate(0);
 
-    transform: translate(-50%, -50%);
+    transition: transform 2s;
 }
+//#div-time.inited see above at cycles
+
 
 .hour-icon {
     width: $divTimeSize;
@@ -280,6 +294,14 @@ $divTimeSize: 50px - 2 * ($divTimeBorder + $divTimePadding);
 //////////////////////////////////////////////////////////////////
 ////////////////////// ??????????    /////////////////////////////
 //////////////////////////////////////////////////////////////////
+
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+}
 
 .content div {
     text-align: right;
