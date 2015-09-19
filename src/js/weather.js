@@ -8,9 +8,9 @@ var weather = (function Weather() {
     };
     var format = FORMAT.C;
 
+    var callbacks = null;
 
-
-    function processWeather(res, cb) {
+    function processWeather(res) {
         // Process current weather
         var current = res.data.current_condition[0];
         var code = current.weatherCode;
@@ -57,19 +57,14 @@ var weather = (function Weather() {
             hourList: resHourlist 
         };
 
-        cb(response);
+        callbacks.onSuccess(response);
     }
 
 
 
-    function processLocation(location, cb) {
-        console.log('processLocation '+ typeof cb);
-        var loc = location.loc.split(',');
-        var lat = loc[0];
-        var lon = loc[1];
-
+    function processLocation(loc) {
         var params = {
-            'q': `${lat},${lon}`,
+            'q': `${loc.coords.latitude},${loc.coords.longitude}`,
             'num_of_days': 2,
             'fx24': true,
             'key': 'e647ab75e8339699c1dc7e12fa0df',
@@ -79,18 +74,29 @@ var weather = (function Weather() {
         };
         var url = 'https://api.worldweatheronline.com/free/v2/weather.ashx?' +
                 $.param(params);
-        $.getJSON(url).success(function(res) {
-            processWeather(res, cb);
-        });
+        $.getJSON(url)
+            .done(processWeather)
+            .fail(callbacks.weatherErrored);
     }
 
+    function locationSucceed(loc) {
+        callbacks.locationSucceed();
+        processLocation(loc);
+    }
 
+    function locationErrored() {
+        callbacks.locationErrored();
+        processLocation(fn.randomCity());
+    }
 
     function getWeather(cb) {
-        $.getJSON('https://ipinfo.io')
-            .success(function(location) {
-                processLocation(location, cb);
-            });
+        callbacks = cb;
+
+        navigator.geolocation.getCurrentPosition(
+            locationSucceed,
+            locationErrored,
+            {timeout: 3000}
+        );
     }
 
 

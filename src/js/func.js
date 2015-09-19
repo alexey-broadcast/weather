@@ -253,6 +253,25 @@ var fn = (function Fn() {
 
 
 
+    function randomCity() {
+        var cities = [
+            {"coords":{"longitude":30.264168,"latitide":59.894444}},        //"Saint Petersburg"
+            {"coords":{"longitude":37.615555,"latitude":55.75222}},        //"Moscow"
+            {"coords":{"longitude":13.41053,"latitude":52.524368}},        //"Berlin"
+            {"coords":{"longitude":-0.08901,"latitude":51.51334}},         //"City of London"
+            {"coords":{"longitude":139.691711,"latitude":35.689499}},      //"Tokyo"
+            {"coords":{"longitude":121.458061,"latitude":31.222219}},      //"Shanghai"
+            {"coords":{"longitude":-43.2075,"latitude":-22.902781}},       //"Rio de Janeiro"
+            {"coords":{"longitude":28.043631,"latitude":-26.202271}},      //"Johannesburg"
+            {"coords":{"longitude":-3.70256,"latitude":40.4165}},          //"Madrid"
+            {"coords":{"longitude":2.35236,"latitude":48.856461}},         //"Paris"
+            {"coords":{"longitude":-75.499901,"latitude":43.000351}},      //"New York"
+        ]
+        var i = Math.floor(Math.random() * (cities.length + 1));
+        return cities[i];
+    }
+
+
     return {
         weekDayName: weekDayName,
         monthName: monthName,
@@ -262,6 +281,7 @@ var fn = (function Fn() {
         codeToDesc: codeToDesc,
         toDateMs : toDateMs,
         iconToPic: iconToPic,
-        toTempStr: toTempStr
+        toTempStr: toTempStr,
+        randomCity: randomCity
     };
 })();

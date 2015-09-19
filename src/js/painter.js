@@ -32,16 +32,32 @@ var painter = (function () {
 
     var $headerDt = $('header .datetime');
     var $headerLoc = $('header .location');
+    var $headerStatus = $('header .status');
     var $button = $('button');
     var $btnCf = $('#btn-cf');
     var $bgImg = $('.bg-img');
     var $loader = $(".loader-background");
+    var $loaderStatus = $('.loader-background .loader-status');
+    var $loaderAnimation = $('.loader-background .loader-animation');
+
+    function locationSucceed() {
+        var str = '<br>OK<br>Getting weather...'
+        $loaderStatus.append(str);
+    }
+
+    function locationErrored() {
+        $loaderStatus.append("<br>Can't recognize your location!<br>Getting random weather...");   
+        $headerStatus.append("Sorry, I couldn't recognize your location. Enjoy random city weather!");
+    }
 
     function hideLoader() {
         $loader.fadeOut(500);        
     }
 
-
+    function weatherErrored() {
+        $loaderAnimation.hide();
+        $loaderStatus.append("<br>No reply from weather server :-(");
+    }
 
     function initialAnimation() {
         console.log('process Animations...');
@@ -174,6 +190,9 @@ var painter = (function () {
 
     return {
         showWeather: showWeather,
-        toggleCF: toggleCF
+        toggleCF: toggleCF,
+        locationSucceed: locationSucceed,
+        locationErrored: locationErrored,
+        weatherErrored: weatherErrored
     }
 })();
