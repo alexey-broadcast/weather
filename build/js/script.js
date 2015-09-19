@@ -506,7 +506,7 @@ var weather = (function Weather() {
     var resHourlist = [];
     for (var i = 0; i < 5; ++i) {
       var timeStr = '0:00';
-      if (hourList[i] != '0')
+      if (hourList[i].time > 0)
         timeStr = hourList[i].time.slice(0, -2) + ':' + hourList[i].time.slice(-2);
       resHourlist.push({
         icon: fn.codeToIcon(hourList[i].weatherCode, hourList[i].time),
