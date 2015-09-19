@@ -316,7 +316,7 @@ var painter = (function() {
   var $headerLoc = $('header .location');
   var $button = $('button');
   var $btnCf = $('#btn-cf');
-  var $bgImgContainer = $('.bgImgContainer');
+  var $bgImg = $('.bg-img');
   var $loader = $(".loader-background");
   function hideLoader() {
     $loader.fadeOut(500);
@@ -345,7 +345,7 @@ var painter = (function() {
   function setBackground(icon) {
     console.log('setBackground');
     var url = fn.iconToPic(icon, true);
-    $bgImgContainer.css('background-image', url);
+    $bgImg.css('background-image', url);
     hideLoader();
     var pos = ("0 -" + $contentCircle.offset().top + "px");
     $contentCircle.css('background-position', pos);
@@ -386,9 +386,9 @@ var painter = (function() {
     tempC.hourList = res.hourList.map(function(item) {
       return item.temp;
     });
-    $bgImgContainer.append('<img/>');
+    $bgImg.append('<img/>');
     var url = fn.iconToPic(res.current.icon);
-    var $tmpImg = $bgImgContainer.find('img');
+    var $tmpImg = $bgImg.find('img');
     $tmpImg.attr('src', url).load(function() {
       $tmpImg.remove();
       setBackground(res.current.icon);

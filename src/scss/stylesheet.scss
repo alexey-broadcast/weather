@@ -311,22 +311,26 @@ $circleSize: 250px;
     display: inline-block;
 }
 
-.bgImgContainer {
-    overflow: hidden;
+.bg-img-container {
     position: absolute;
+    left: 0;
+    top: 0;
     z-index: -10;
-    $blurFactor: 5px;
-    $size: calc(100% + #{($blurFactor * 2)});
-    width: $size;
-    height: $size;
-    left: -$blurFactor;
-    top: -$blurFactor;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+}
+
+.bg-img {
+    width: 100%;
+    height: 100%;
+
     filter: blur(5px);
     background-repeat: no-repeat;
     transform: scale(1.1);
 }
-
-
 
 
 

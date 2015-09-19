@@ -34,7 +34,7 @@ var painter = (function () {
     var $headerLoc = $('header .location');
     var $button = $('button');
     var $btnCf = $('#btn-cf');
-    var $bgImgContainer = $('.bgImgContainer');
+    var $bgImg = $('.bg-img');
     var $loader = $(".loader-background");
 
     function hideLoader() {
@@ -75,7 +75,7 @@ var painter = (function () {
         console.log('setBackground');
         var url = fn.iconToPic(icon, true);
 
-        $bgImgContainer.css('background-image', url);
+        $bgImg.css('background-image', url);
         hideLoader();
 
         var pos = `0 -${$contentCircle.offset().top}px`;
@@ -134,10 +134,10 @@ var painter = (function () {
         tempC.hourList = res.hourList.map(item => item.temp);
 
         //Load background image, THEN do anything else
-        $bgImgContainer.append('<img/>');
+        $bgImg.append('<img/>');
 
         var url = fn.iconToPic(res.current.icon);
-        var $tmpImg = $bgImgContainer.find('img');
+        var $tmpImg = $bgImg.find('img');
 
         $tmpImg.attr('src', url).load(function() {
             $tmpImg.remove(); // prevent memory leaks
