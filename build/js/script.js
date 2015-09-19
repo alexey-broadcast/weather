@@ -268,6 +268,44 @@ var fn = (function Fn() {
     temp = Math.round(temp);
     return temp + '&deg;' + weather.format;
   }
+  function randomCity() {
+    var cities = [{"coords": {
+        "longitude": 30.264168,
+        "latitide": 59.894444
+      }}, {"coords": {
+        "longitude": 37.615555,
+        "latitude": 55.75222
+      }}, {"coords": {
+        "longitude": 13.41053,
+        "latitude": 52.524368
+      }}, {"coords": {
+        "longitude": -0.08901,
+        "latitude": 51.51334
+      }}, {"coords": {
+        "longitude": 139.691711,
+        "latitude": 35.689499
+      }}, {"coords": {
+        "longitude": 121.458061,
+        "latitude": 31.222219
+      }}, {"coords": {
+        "longitude": -43.2075,
+        "latitude": -22.902781
+      }}, {"coords": {
+        "longitude": 28.043631,
+        "latitude": -26.202271
+      }}, {"coords": {
+        "longitude": -3.70256,
+        "latitude": 40.4165
+      }}, {"coords": {
+        "longitude": 2.35236,
+        "latitude": 48.856461
+      }}, {"coords": {
+        "longitude": -75.499901,
+        "latitude": 43.000351
+      }}];
+    var i = Math.floor(Math.random() * (cities.length + 1));
+    return cities[i];
+  }
   return {
     weekDayName: weekDayName,
     monthName: monthName,
@@ -277,14 +315,20 @@ var fn = (function Fn() {
     codeToDesc: codeToDesc,
     toDateMs: toDateMs,
     iconToPic: iconToPic,
-    toTempStr: toTempStr
+    toTempStr: toTempStr,
+    randomCity: randomCity
   };
 })();
 $(document).ready(function() {
   "use strict";
-  console.log(painter);
   $('#btn-cf').on('click', painter.toggleCF);
-  weather.getWeather(painter.showWeather);
+  var cb = {
+    onSuccess: painter.showWeather,
+    locationSucceed: painter.locationSucceed,
+    locationErrored: painter.locationErrored,
+    weatherErrored: painter.weatherErrored
+  };
+  weather.getWeather(cb);
 });
 var painter = (function() {
   "use strict";
@@ -314,12 +358,27 @@ var painter = (function() {
   }
   var $headerDt = $('header .datetime');
   var $headerLoc = $('header .location');
+  var $headerStatus = $('header .status');
   var $button = $('button');
   var $btnCf = $('#btn-cf');
   var $bgImg = $('.bg-img');
   var $loader = $(".loader-background");
+  var $loaderStatus = $('.loader-background .loader-status');
+  var $loaderAnimation = $('.loader-background .loader-animation');
+  function locationSucceed() {
+    var str = '<br>OK<br>Getting weather...';
+    $loaderStatus.append(str);
+  }
+  function locationErrored() {
+    $loaderStatus.append("<br>Can't recognize your location!<br>Getting random weather...");
+    $headerStatus.append("Sorry, I couldn't recognize your location. Enjoy random city weather!");
+  }
   function hideLoader() {
     $loader.fadeOut(500);
+  }
+  function weatherErrored() {
+    $loaderAnimation.hide();
+    $loaderStatus.append("<br>No reply from weather server :-(");
   }
   function initialAnimation() {
     console.log('process Animations...');
@@ -409,7 +468,10 @@ var painter = (function() {
   }
   return {
     showWeather: showWeather,
-    toggleCF: toggleCF
+    toggleCF: toggleCF,
+    locationSucceed: locationSucceed,
+    locationErrored: locationErrored,
+    weatherErrored: weatherErrored
   };
 })();
 var weather = (function Weather() {
@@ -420,7 +482,8 @@ var weather = (function Weather() {
     K: 'K'
   };
   var format = FORMAT.C;
-  function processWeather(res, cb) {
+  var callbacks = null;
+  function processWeather(res) {
     var current = res.data.current_condition[0];
     var code = current.weatherCode;
     var resCurrent = {
@@ -458,15 +521,11 @@ var weather = (function Weather() {
       current: resCurrent,
       hourList: resHourlist
     };
-    cb(response);
+    callbacks.onSuccess(response);
   }
-  function processLocation(location, cb) {
-    console.log('processLocation ' + typeof cb);
-    var loc = location.loc.split(',');
-    var lat = loc[0];
-    var lon = loc[1];
+  function processLocation(loc) {
     var params = {
-      'q': (lat + "," + lon),
+      'q': (loc.coords.latitude + "," + loc.coords.longitude),
       'num_of_days': 2,
       'fx24': true,
       'key': 'e647ab75e8339699c1dc7e12fa0df',
@@ -475,14 +534,19 @@ var weather = (function Weather() {
       'includelocation': 'yes'
     };
     var url = 'https://api.worldweatheronline.com/free/v2/weather.ashx?' + $.param(params);
-    $.getJSON(url).success(function(res) {
-      processWeather(res, cb);
-    });
+    $.getJSON(url).done(processWeather).fail(callbacks.weatherErrored);
+  }
+  function locationSucceed(loc) {
+    callbacks.locationSucceed();
+    processLocation(loc);
+  }
+  function locationErrored() {
+    callbacks.locationErrored();
+    processLocation(fn.randomCity());
   }
   function getWeather(cb) {
-    $.getJSON('https://ipinfo.io').success(function(location) {
-      processLocation(location, cb);
-    });
+    callbacks = cb;
+    navigator.geolocation.getCurrentPosition(locationSucceed, locationErrored, {timeout: 3000});
   }
   return {
     FORMAT: FORMAT,
