@@ -297,7 +297,11 @@ a:visited {
   left: -5px;
   top: -5px;
   -webkit-filter: blur(5px);
-          filter: blur(5px); }
+          filter: blur(5px);
+  background-repeat: no-repeat;
+  -webkit-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+          transform: scale(1.1); }
 
 .loader-background {
   background-color: #385EB5;

@@ -322,10 +322,10 @@ var painter = (function() {
     $loader.fadeOut(500);
   }
   function initialAnimation() {
-    $btnCf.addClass('inited');
     console.log('process Animations...');
     for (var i = 0; i < 5; ++i)
       $divHours[i].addClass('inited');
+    $btnCf.addClass('inited');
   }
   function setWindArrowAngle(angle) {
     if (angle === undefined) {
