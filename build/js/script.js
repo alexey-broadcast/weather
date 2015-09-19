@@ -59,7 +59,7 @@ var fn = (function Fn() {
     }
   }
   function codeToIcon(code, time) {
-    var res = '';
+    var res = '01';
     switch (parseInt(code)) {
       case 116:
         res = '02';
@@ -125,7 +125,6 @@ var fn = (function Fn() {
         res = '50';
         break;
       case 113:
-      default:
         res = '01';
     }
     var d;
@@ -253,7 +252,7 @@ var fn = (function Fn() {
       return ("pics/" + pic + ".jpg");
   }
   function toDateMs(timeStr) {
-    if (timeStr.length < 4)
+    while (timeStr.length < 4)
       timeStr = '0' + timeStr;
     var d = new Date();
     var h = parseInt(timeStr.substr(0, 2));
@@ -352,7 +351,7 @@ var painter = (function() {
   var $divHourTemps = [];
   for (var i = 0; i < 5; ++i) {
     $divHours.push($('#div-time' + i));
-    $divHourIcons.push($divHours[i].find('.hour-icon use'));
+    $divHourIcons.push($divHours[i].find('.hour-icon'));
     $divHourTimes.push($divHours[i].find('.hour-content .hour-time'));
     $divHourTemps.push($divHours[i].find('.hour-content .hour-temp'));
   }
@@ -433,9 +432,11 @@ var painter = (function() {
     $mainWindDescription.text(windStr);
   }
   function updateHourForecast(list) {
+    console.log('updateHourForecast');
     for (var i in list) {
       var icon = '#' + list[i].icon;
       $divHourIcons[i].find('use').attr('xlink:href', icon);
+      $divHourIcons[i].find('use').attr('href', icon);
       $divHourTimes[i].text(list[i].time);
       $divHourTemps[i].html(fn.toTempStr(list[i].temp));
     }

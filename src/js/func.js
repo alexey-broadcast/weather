@@ -80,7 +80,7 @@ var fn = (function Fn() {
 
 
     function codeToIcon(code, time) {
-        var res = '';
+        var res = '01';
 
         switch (parseInt(code)) {
             case 116: res = '02'; break;
@@ -138,8 +138,7 @@ var fn = (function Fn() {
             case 248:
             case 260: res = '50'; break;
 
-            case 113:
-            default:  res = '01';
+            case 113: res = '01';
         }
 
         var d;
@@ -152,6 +151,7 @@ var fn = (function Fn() {
             res += 'n';
         else
             res += 'd';
+
         return  res;
     }
 
@@ -229,7 +229,7 @@ var fn = (function Fn() {
 
 
     function toDateMs(timeStr) {//timeStr is a 'HHmm' string
-        if(timeStr.length < 4)
+        while (timeStr.length < 4)
             timeStr = '0' + timeStr;
 
         var d = new Date();

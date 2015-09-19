@@ -25,7 +25,7 @@ var painter = (function () {
     var $divHourTemps = [];
     for(var i = 0; i < 5; ++i) {
         $divHours.push($('#div-time'+i));
-        $divHourIcons.push($divHours[i].find('.hour-icon use'));
+        $divHourIcons.push($divHours[i].find('.hour-icon'));
         $divHourTimes.push($divHours[i].find('.hour-content .hour-time'));
         $divHourTemps.push($divHours[i].find('.hour-content .hour-temp'));
     }
@@ -134,9 +134,11 @@ var painter = (function () {
 
 
     function updateHourForecast(list) {
+        console.log('updateHourForecast');
         for(var i in list) {
             var icon = '#'+list[i].icon;
             $divHourIcons[i].find('use').attr('xlink:href', icon);
+            $divHourIcons[i].find('use').attr('href', icon);
 
             $divHourTimes[i].text(list[i].time);
             $divHourTemps[i].html(fn.toTempStr(list[i].temp));
