@@ -83,6 +83,8 @@ $btnShadow: 6px;
     color: $textColor;
     background-color: $btnBgColor;
     box-shadow: 0 $btnShadow $btnShadow 2px $shadowColor;
+
+    cursor: pointer;
 }
 #btn-cf.inited {
     right: 0;

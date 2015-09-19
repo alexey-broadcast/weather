@@ -49,7 +49,8 @@ a:visited {
   color: white;
   background-color: white;
   -webkit-box-shadow: 0 6px 6px 2px rgba(0, 0, 0, 0.2);
-          box-shadow: 0 6px 6px 2px rgba(0, 0, 0, 0.2); }
+          box-shadow: 0 6px 6px 2px rgba(0, 0, 0, 0.2);
+  cursor: pointer; }
 
 #btn-cf.inited {
   right: 0; }
