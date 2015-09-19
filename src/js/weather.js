@@ -38,7 +38,10 @@ var weather = (function Weather() {
         // Process hourly forecast
         var resHourlist = [];
         for(var i = 0; i < 5; ++i) {
-            var timeStr = hourList[i].time.slice(0, -2) + ':' + hourList[i].time.slice(-2);
+            var timeStr = '0:00';
+            if(hourList[i] != '0')
+                timeStr = hourList[i].time.slice(0, -2) + ':' + hourList[i].time.slice(-2);
+
             resHourlist.push({
                 icon: fn.codeToIcon(hourList[i].weatherCode, hourList[i].time),
                 temp: hourList[i].tempC,
