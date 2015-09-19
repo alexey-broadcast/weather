@@ -322,19 +322,10 @@ var painter = (function() {
     $loader.fadeOut(500);
   }
   function initialAnimation() {
-    var circleSize = $outerCircle.width();
-    var border = parseInt($divHour.css('borderWidth'));
-    var padding = parseInt($divHour.css('padding'));
-    var divHourSize = $divHour.width() + 2 * (border + padding);
-    var amend = ("50% - " + divHourSize + "px / 2");
-    var dur = 2400;
-    var count = 200;
-    var startAngle = -Math.PI / 6;
     $btnCf.addClass('inited');
     console.log('process Animations...');
-    for (var i = 0; i < 5; ++i) {
+    for (var i = 0; i < 5; ++i)
       $divHours[i].addClass('inited');
-    }
   }
   function setWindArrowAngle(angle) {
     if (angle === undefined) {
