@@ -319,9 +319,11 @@ $circleSize: 250px;
     $size: calc(100% + #{($blurFactor * 2)});
     width: $size;
     height: $size;
-    left: #{-$blurFactor};
-    top: #{-$blurFactor};
+    left: -$blurFactor;
+    top: -$blurFactor;
     filter: blur(5px);
+    background-repeat: no-repeat;
+    transform: scale(1.1);
 }
 
 
