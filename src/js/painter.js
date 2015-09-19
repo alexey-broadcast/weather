@@ -44,56 +44,11 @@ var painter = (function () {
 
 
     function initialAnimation() {
-        const circleSize = $outerCircle.width();
-        var border = parseInt($divHour.css('borderWidth'));
-        var padding = parseInt($divHour.css('padding'));
-        const divHourSize = $divHour.width() + 2 * (border + padding);
-        const amend = `50% - ${divHourSize}px / 2`;
-
-        const dur = 2400;
-        const count = 200; 
-        const startAngle = -Math.PI / 6;
-
-
-
-        // function divTimeAnimation(n) {
-        //     const endAngle = -Math.PI / 6 * (4 + n);
-        //     const dAngle = (endAngle - startAngle) / count;
-
-        //     var anim = setInterval(() => {
-        //         var angle = startAngle + dAngle * i++;
-        //         $divHours[n].css('right', 'calc('+Math.round(Math.cos(angle) * 100) / 2+'% + ' + amend + ')');
-        //         $divHours[n].css('top',   'calc('+Math.round(Math.sin(angle) * 100) / 2+'% + ' + amend + ')');
-        //         if(angle <= endAngle) {
-        //             clearInterval(anim);
-        //         }
-        //     }, dur / count);
-        // }
-
-
-
-        // function btnAnimation() {
-        //     var pos = -6;
-        //     const endPos = 0;
-        //     const dPos = (endPos - pos) / count * 4;
-        //     var anim = setInterval(() => {
-        //         pos += dPos;
-
-        //         $btnCf.css('right', pos + 'em');
-        //         if (pos >= endPos) {
-        //             clearInterval(anim);
-        //         }
-        //     }, dur / count);
-        // }
-        $btnCf.addClass('inited');
-
         //process Animations
         console.log('process Animations...');
-        // btnAnimation();
-        for(var i = 0; i < 5; ++i) {
-            // divTimeAnimation(i);
+        for(var i = 0; i < 5; ++i)
             $divHours[i].addClass('inited');
-        }
+        $btnCf.addClass('inited');
     }
 
 
