@@ -480,7 +480,7 @@ var weather = (function Weather() {
     });
   }
   function getWeather(cb) {
-    $.getJSON('http://ipinfo.io').success(function(location) {
+    $.getJSON('https://ipinfo.io').success(function(location) {
       processLocation(location, cb);
     });
   }
