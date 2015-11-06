@@ -1,5 +1,5 @@
-# freecodecamp-weather
-See a perfect weather app at http://alexey-broadcast.github.io/freecodecamp-weather
+# Weather
+See a perfect weather app at http://alexey-broadcast.github.io/weather
 
 ------------------------------
 Developed in according to 
